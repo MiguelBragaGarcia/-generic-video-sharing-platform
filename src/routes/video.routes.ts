@@ -12,7 +12,7 @@ interface VideoData {
 const videos: VideoData[] = [];
 
 videoRouter.get('/', (request, response) => {
-  response.json(videos);
+  return response.json(videos);
 });
 
 videoRouter.post('/', (request, response) => {
@@ -29,7 +29,7 @@ videoRouter.post('/', (request, response) => {
 
   videos.push(newVideo);
 
-  response.json(newVideo);
+  return response.json(newVideo);
 });
 
 export default videoRouter;
