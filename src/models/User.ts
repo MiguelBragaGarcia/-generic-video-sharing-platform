@@ -20,7 +20,9 @@ class User {
   @Column()
   password: string;
 
-  // Avatar field
+  @Column()
+  avatar: string;
+
   @CreateDateColumn()
   created_at: Date;
 
