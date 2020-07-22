@@ -1,35 +1,24 @@
 import { Router } from 'express';
+import CreateVideoService from '../services/CreateVideoService';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const videoRouter = Router();
 
-interface VideoData {
-  id: string;
-  titulo: string;
-  descricao: string;
-  vizualizacao: number;
-}
+videoRouter.use(ensureAuthenticated);
 
-const videos: VideoData[] = [];
+const createVideoService = new CreateVideoService();
 
-videoRouter.get('/', (request, response) => {
-  return response.json(videos);
-});
+videoRouter.post('/', async (request, response) => {
+  const { title, description } = request.body;
+  const user_id = request.user.id;
 
-videoRouter.post('/', (request, response) => {
-  const { titulo, descricao } = request.body;
+  const video = await createVideoService.execute({
+    user_id,
+    title,
+    description,
+  });
 
-  const lastIndex = videos.length;
-
-  const newVideo = {
-    id: String(lastIndex + 1),
-    titulo,
-    descricao,
-    vizualizacao: 0,
-  };
-
-  videos.push(newVideo);
-
-  return response.json(newVideo);
+  return response.json(video);
 });
 
 export default videoRouter;
