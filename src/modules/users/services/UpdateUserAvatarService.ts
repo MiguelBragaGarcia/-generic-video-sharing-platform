@@ -1,8 +1,7 @@
 import User from '@modules/users/infra/typeorm/entities/User';
 import AppError from '@shared/errors/AppError';
-
-import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
-import DiskStorageProvider from '@shared/providers/StorageProvider/implementations/DiskStorageProvider';
+import IStorageProvider from '@shared/providers/StorageProvider/models/IStorageProvider';
+import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
   user_id: string;
@@ -10,25 +9,27 @@ interface IRequest {
 }
 
 class UpdateUserAvatarService {
-  public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
-    const usersRepository = new UsersRepository();
-    const storageProvider = new DiskStorageProvider();
+  constructor(
+    private usersRepository: IUsersRepository,
+    private storageProvider: IStorageProvider
+  ) {}
 
-    const user = await usersRepository.findById(user_id);
+  public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
+    const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
       throw new AppError('Only authenticated users can change avatar');
     }
 
     if (user.avatar) {
-      await storageProvider.deleteFile(user.avatar);
+      await this.storageProvider.deleteFile(user.avatar);
     }
 
-    const filename = await storageProvider.saveFile(avatarFilename);
+    const filename = await this.storageProvider.saveFile(avatarFilename);
 
     user.avatar = filename;
 
-    await usersRepository.save(user);
+    await this.usersRepository.save(user);
 
     return user;
   }

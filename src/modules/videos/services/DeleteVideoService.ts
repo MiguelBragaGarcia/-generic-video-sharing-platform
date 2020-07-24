@@ -1,6 +1,7 @@
 import AppError from '@shared/errors/AppError';
-import VideosRepository from '@modules/videos/infra/typeorm/repositories/VideosRepository';
-import DiskStorageProvider from '@shared/providers/StorageProvider/implementations/DiskStorageProviderVideo';
+
+import IStorageProvider from '@shared/providers/StorageProvider/models/IStorageProvider';
+import IVideosRepository from '../repositories/IVideosRepository';
 
 interface IRequest {
   video_id: string;
@@ -8,11 +9,13 @@ interface IRequest {
 }
 
 class DeleteVideoService {
-  public async execute({ video_id, user_id }: IRequest): Promise<void> {
-    const storageProvider = new DiskStorageProvider();
-    const videosRepository = new VideosRepository();
+  constructor(
+    private storageProvider: IStorageProvider,
+    private videosRepository: IVideosRepository
+  ) {}
 
-    const video = await videosRepository.findById(video_id);
+  public async execute({ video_id, user_id }: IRequest): Promise<void> {
+    const video = await this.videosRepository.findById(video_id);
 
     if (!video) {
       throw new AppError('Invalid video ID');
@@ -23,10 +26,10 @@ class DeleteVideoService {
     }
 
     if (video.video) {
-      await storageProvider.deleteFile(video.video);
+      await this.storageProvider.deleteFile(video.video);
     }
 
-    await videosRepository.delete(video.id);
+    await this.videosRepository.delete(video.id);
   }
 }
 export default DeleteVideoService;

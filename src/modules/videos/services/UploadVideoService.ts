@@ -1,9 +1,9 @@
 import Video from '@modules/videos/infra/typeorm/entities/Video';
 
 import AppError from '@shared/errors/AppError';
-import VideosRepository from '@modules/videos/infra/typeorm/repositories/VideosRepository';
 
-import DiskStorageProviderVideo from '@shared/providers/StorageProvider/implementations/DiskStorageProviderVideo';
+import IStorageProvider from '@shared/providers/StorageProvider/models/IStorageProvider';
+import IVideosRepository from '../repositories/IVideosRepository';
 
 interface IRequest {
   video_id: string;
@@ -12,16 +12,17 @@ interface IRequest {
 }
 
 class UploadVideoService {
+  constructor(
+    private videosRepository: IVideosRepository,
+    private storageProvider: IStorageProvider
+  ) {}
+
   public async execute({
     video_id,
     user_id,
     video_filename,
   }: IRequest): Promise<Video> {
-    const videosRepository = new VideosRepository();
-
-    const storageProvider = new DiskStorageProviderVideo();
-
-    const video = await videosRepository.findById(video_id);
+    const video = await this.videosRepository.findById(video_id);
 
     if (!video) {
       throw new AppError('Invalid video ID');
@@ -31,11 +32,11 @@ class UploadVideoService {
       throw new AppError("You cannot change someone else's video");
     }
 
-    const filename = await storageProvider.saveFile(video_filename);
+    const filename = await this.storageProvider.saveFile(video_filename);
 
     video.video = filename;
 
-    await videosRepository.save(video);
+    await this.videosRepository.save(video);
 
     return video;
   }

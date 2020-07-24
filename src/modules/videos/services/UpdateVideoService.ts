@@ -1,8 +1,7 @@
 import Video from '@modules/videos/infra/typeorm/entities/Video';
-
 import AppError from '@shared/errors/AppError';
-import VideosRepository from '@modules/videos/infra/typeorm/repositories/VideosRepository';
-import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
+
+import IVideosRepository from '../repositories/IVideosRepository';
 
 interface IRequest {
   video_id: string;
@@ -12,22 +11,15 @@ interface IRequest {
 }
 
 class UpdateVideoService {
+  constructor(private videosRepository: IVideosRepository) {}
+
   public async execute({
     video_id,
     user_id,
     title,
     description,
   }: IRequest): Promise<Video> {
-    const videosRepository = new VideosRepository();
-    const usersRepository = new UsersRepository();
-
-    const user = await usersRepository.findById(user_id); // Refletir se realmente precisa disso -> O usuário já está logado, eu preciso verificar se ele existe?
-
-    if (!user) {
-      throw new AppError('User not found');
-    }
-
-    const video = await videosRepository.findById(video_id);
+    const video = await this.videosRepository.findById(video_id);
 
     if (!video) {
       throw new AppError('Video not found');
@@ -41,7 +33,7 @@ class UpdateVideoService {
     video.title = title;
     video.description = description;
 
-    await videosRepository.save(video);
+    await this.videosRepository.save(video);
 
     return video;
   }

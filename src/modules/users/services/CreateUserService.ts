@@ -1,7 +1,8 @@
-import BCryptHashProvider from '@shared/providers/HashProvider/implementations/BCryptHashProvider';
 import AppError from '@shared/errors/AppError';
-import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
+
 import User from '@modules/users/infra/typeorm/entities/User';
+import IHashProvider from '@shared/providers/HashProvider/models/IHashProvider';
+import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
   name: string;
@@ -10,19 +11,21 @@ interface IRequest {
 }
 
 class CreateUserService {
-  public async execute({ name, password, email }: IRequest): Promise<User> {
-    const userRepository = new UsersRepository();
-    const bCryptHashProvider = new BCryptHashProvider();
+  constructor(
+    private usersRepository: IUsersRepository,
+    private hashProvider: IHashProvider
+  ) {}
 
-    const userWithSameEmail = await userRepository.findByEmail(email);
+  public async execute({ name, password, email }: IRequest): Promise<User> {
+    const userWithSameEmail = await this.usersRepository.findByEmail(email);
 
     if (userWithSameEmail) {
       throw new AppError('Email address already used.');
     }
 
-    const hashedPassword = await bCryptHashProvider.generateHash(password);
+    const hashedPassword = await this.hashProvider.generateHash(password);
 
-    const newUser = await userRepository.create({
+    const newUser = await this.usersRepository.create({
       name,
       password: hashedPassword,
       email,

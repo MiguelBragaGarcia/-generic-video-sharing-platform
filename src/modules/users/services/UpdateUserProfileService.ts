@@ -1,7 +1,7 @@
 import User from '@modules/users/infra/typeorm/entities/User';
 import AppError from '@shared/errors/AppError';
-import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
-import BCryptHashProvider from '@shared/providers/HashProvider/implementations/BCryptHashProvider';
+import IHashProvider from '@shared/providers/HashProvider/models/IHashProvider';
+import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
   id: string;
@@ -12,6 +12,11 @@ interface IRequest {
 }
 
 class UpdateProfileService {
+  constructor(
+    private usersRepository: IUsersRepository,
+    private hashProvider: IHashProvider
+  ) {}
+
   public async execute({
     id,
     name,
@@ -19,16 +24,13 @@ class UpdateProfileService {
     old_password,
     password,
   }: IRequest): Promise<User> {
-    const usersRepository = new UsersRepository();
-    const hashProvider = new BCryptHashProvider();
-
-    const user = await usersRepository.findById(id);
+    const user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new AppError('User not found');
     }
 
-    const userWithUpdatedEmail = await usersRepository.findByEmail(email);
+    const userWithUpdatedEmail = await this.usersRepository.findByEmail(email);
 
     if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user.id) {
       throw new AppError('Email already in use');
@@ -41,7 +43,7 @@ class UpdateProfileService {
     }
 
     if (password && old_password) {
-      const checkOldPassword = await hashProvider.compareHash(
+      const checkOldPassword = await this.hashProvider.compareHash(
         old_password,
         user.password
       );
@@ -52,13 +54,13 @@ class UpdateProfileService {
     }
 
     if (password) {
-      user.password = await hashProvider.generateHash(password);
+      user.password = await this.hashProvider.generateHash(password);
     }
 
     user.name = name;
     user.email = email;
 
-    const updatedUser = await usersRepository.save(user);
+    const updatedUser = await this.usersRepository.save(user);
 
     return updatedUser;
   }

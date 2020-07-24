@@ -1,9 +1,11 @@
 import { sign } from 'jsonwebtoken';
 import AppError from '@shared/errors/AppError';
-import BcryptHashProvider from '@shared/providers/HashProvider/implementations/BCryptHashProvider';
+
 import authConfig from '@config/auth';
-import UserRepository from '../infra/typeorm/repositories/UsersRepository';
+
+import IHashProvider from '@shared/providers/HashProvider/models/IHashProvider';
 import User from '../infra/typeorm/entities/User';
+import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
   email: string;
@@ -16,17 +18,19 @@ interface IResponse {
 }
 
 class AuthenticateUserService {
-  public async execute({ email, password }: IRequest): Promise<IResponse> {
-    const userRepository = new UserRepository();
-    const hashProvider = new BcryptHashProvider();
+  constructor(
+    private usersRepository: IUsersRepository,
+    private hashProvider: IHashProvider
+  ) {}
 
-    const user = await userRepository.findByEmail(email);
+  public async execute({ email, password }: IRequest): Promise<IResponse> {
+    const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
       throw new AppError('Incorrect email/password combination.', 401);
     }
 
-    const passwordMatched = await hashProvider.compareHash(
+    const passwordMatched = await this.hashProvider.compareHash(
       password,
       user.password
     );
