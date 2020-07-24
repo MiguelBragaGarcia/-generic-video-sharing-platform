@@ -26,6 +26,9 @@ class Video {
   user: User;
 
   @Column()
+  video: string;
+
+  @Column()
   views: number;
 
   @CreateDateColumn()
