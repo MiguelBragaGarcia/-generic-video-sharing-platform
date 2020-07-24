@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev:server": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts ",
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts ",
+    "start": "ts-node-dev src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
@@ -34,6 +35,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "prettier": "^2.0.5",
     "ts-node-dev": "^1.0.0-pre.52",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.9.7"
   }
 }
