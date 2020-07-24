@@ -27,7 +27,7 @@ class VideosRepository implements IVideosRepository {
     return video;
   }
 
-  public async find(id: string): Promise<Video | undefined> {
+  public async findById(id: string): Promise<Video | undefined> {
     const video = await this.ormRepository.findOne({
       where: { id },
     });
