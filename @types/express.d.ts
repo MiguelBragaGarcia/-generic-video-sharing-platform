@@ -3,5 +3,9 @@ declare namespace Express {
     user: {
       id: string;
     };
+
+    upload: {
+      id: string;
+    };
   }
 }
