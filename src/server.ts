@@ -7,14 +7,18 @@ import routes from './routes/index';
 
 import AppError from './errors/AppError';
 import './database';
-import uploadAvatarConfig from './config/uploadAvatarConfig';
+import uploadAvatarConfig from './config/upload';
 
 const server = express();
 
 server.use(express.json());
 server.use(routes);
 
-server.use('/files', express.static(uploadAvatarConfig.uploadFolder));
+server.use(
+  '/files',
+  express.static(uploadAvatarConfig.uploadAvatarFolder),
+  express.static(uploadAvatarConfig.tmpFolder)
+);
 
 server.use(errors());
 
