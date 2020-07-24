@@ -4,6 +4,9 @@ import multer from 'multer';
 import uploadConfig from '../config/upload';
 import CreateVideoService from '../services/CreateVideoService';
 import UploadVideoService from '../services/UploadVideoService';
+import DeleteVideoService from '../services/DeleteVideoService';
+import UpdateVideoService from '../services/UpdateVideoService';
+
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const videoRouter = Router();
@@ -13,22 +16,25 @@ videoRouter.use(ensureAuthenticated);
 
 const createVideoService = new CreateVideoService();
 const uploadVideoService = new UploadVideoService();
-
-const video_id = '';
-
-/**
- * Ideia de como fazer o upload do vídeo.
- * Como o upload da video demora e dependemos dela para a criação completa do vídeo no banco de dados
- * Temos que criar um proto-vídeo vazio no banco de dados e depois ir inserindo os dados de acordo com o que for preenchendo
- * Nesse caso criar antes a representação no banco de dados e depois preencher as informações.
- *
- */
+const updateVideoService = new UpdateVideoService();
+const deleteVideoService = new DeleteVideoService();
 
 videoRouter.post('/', async (request, response) => {
-  const { title, description } = request.body;
   const user_id = request.user.id;
 
   const video = await createVideoService.execute({
+    user_id,
+  });
+
+  return response.json(video);
+});
+
+videoRouter.put('/', async (request, response) => {
+  const { title, description, video_id } = request.body;
+  const user_id = request.user.id;
+
+  const video = await updateVideoService.execute({
+    video_id,
     user_id,
     title,
     description,
@@ -37,7 +43,17 @@ videoRouter.post('/', async (request, response) => {
   return response.json(video);
 });
 
+videoRouter.delete('/', async (request, response) => {
+  const user_id = request.user.id;
+  const { video_id } = request.body;
+
+  await deleteVideoService.execute({ user_id, video_id });
+
+  return response.status(204).json();
+});
+
 videoRouter.patch('/', upload.single('video'), async (request, response) => {
+  const { video_id } = request.body;
   const user_id = request.user.id;
 
   const video = await uploadVideoService.execute({
@@ -48,4 +64,5 @@ videoRouter.patch('/', upload.single('video'), async (request, response) => {
 
   return response.json(video);
 });
+
 export default videoRouter;

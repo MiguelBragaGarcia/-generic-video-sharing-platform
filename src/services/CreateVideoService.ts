@@ -6,16 +6,10 @@ import AppError from '../errors/AppError';
 
 interface IRequest {
   user_id: string;
-  title: string;
-  description: string;
 }
 
 class CreateVideoService {
-  public async execute({
-    user_id,
-    title,
-    description,
-  }: IRequest): Promise<Video> {
+  public async execute({ user_id }: IRequest): Promise<Video> {
     const videosRepository = new VideosRepository();
     const userRepository = new UsersRepository();
 
@@ -25,11 +19,7 @@ class CreateVideoService {
       throw new AppError('This user does not exists');
     }
 
-    const createdVideo = await videosRepository.create({
-      user,
-      title,
-      description,
-    });
+    const createdVideo = await videosRepository.create(user);
 
     return createdVideo;
   }

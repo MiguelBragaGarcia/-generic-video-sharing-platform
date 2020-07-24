@@ -17,7 +17,7 @@ server.use(routes);
 server.use(
   '/files',
   express.static(uploadAvatarConfig.uploadAvatarFolder),
-  express.static(uploadAvatarConfig.tmpFolder)
+  express.static(uploadAvatarConfig.uploadVideoFolder)
 );
 
 server.use(errors());

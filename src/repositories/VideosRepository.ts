@@ -1,7 +1,8 @@
 import { Repository, getRepository } from 'typeorm';
 import IVideosRepository from './IVideosRepository';
+
 import Video from '../models/Video';
-import ICreateVideoDTO from '../DTOS/ICreateVideoDTO';
+import User from '../models/User';
 
 class VideosRepository implements IVideosRepository {
   private ormRepository: Repository<Video>;
@@ -10,15 +11,12 @@ class VideosRepository implements IVideosRepository {
     this.ormRepository = getRepository(Video);
   }
 
-  public async create({
-    user,
-    description,
-    title,
-  }: ICreateVideoDTO): Promise<Video> {
+  public async create(user: User): Promise<Video> {
     const newVideo = this.ormRepository.create({
       user,
-      description,
-      title,
+      title: '',
+      description: '',
+      video: '',
       views: 0,
     });
 
@@ -33,6 +31,10 @@ class VideosRepository implements IVideosRepository {
     });
 
     return video;
+  }
+
+  public async delete(video_id: string): Promise<void> {
+    await this.ormRepository.delete(video_id);
   }
 
   public async save(video: Video): Promise<Video> {
