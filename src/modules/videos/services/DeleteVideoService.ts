@@ -1,16 +1,20 @@
+import { injectable, inject } from 'tsyringe';
+
 import AppError from '@shared/errors/AppError';
 
-import IStorageProvider from '@shared/providers/StorageProvider/models/IStorageProvider';
+import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import IVideosRepository from '../repositories/IVideosRepository';
 
 interface IRequest {
   video_id: string;
   user_id: string;
 }
-
+@injectable()
 class DeleteVideoService {
   constructor(
+    @inject('VideoStorageProvider')
     private storageProvider: IStorageProvider,
+    @inject('VideosRepository')
     private videosRepository: IVideosRepository
   ) {}
 

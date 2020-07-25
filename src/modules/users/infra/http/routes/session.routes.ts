@@ -1,27 +1,33 @@
 import { Router } from 'express';
+import { container } from 'tsyringe';
+import { celebrate, Joi, Segments } from 'celebrate';
+
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
-import BCryptHashProvider from '@shared/providers/HashProvider/implementations/BCryptHashProvider';
-import UsersRepository from '../../typeorm/repositories/UsersRepository';
 
 const sessionRouter = Router();
 
-sessionRouter.post('/', async (request, response) => {
-  const usersRepository = new UsersRepository();
-  const hashProvider = new BCryptHashProvider();
+sessionRouter.post(
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+  }),
+  async (request, response) => {
+    const authenticateUserService = container.resolve(AuthenticateUserService);
 
-  const authenticateUserService = new AuthenticateUserService(
-    usersRepository,
-    hashProvider
-  );
+    const { email, password } = request.body;
 
-  const { email, password } = request.body;
+    const { user, token } = await authenticateUserService.execute({
+      email,
+      password,
+    });
 
-  const { user, token } = await authenticateUserService.execute({
-    email,
-    password,
-  });
+    delete user.password;
 
-  return response.json({ user, token });
-});
+    return response.json({ user, token });
+  }
+);
 
 export default sessionRouter;

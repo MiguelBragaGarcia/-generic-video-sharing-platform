@@ -1,3 +1,5 @@
+import { injectable, inject } from 'tsyringe';
+
 import Video from '@modules/videos/infra/typeorm/entities/Video';
 import AppError from '@shared/errors/AppError';
 
@@ -9,9 +11,12 @@ interface IRequest {
   title: string;
   description: string;
 }
-
+@injectable()
 class UpdateVideoService {
-  constructor(private videosRepository: IVideosRepository) {}
+  constructor(
+    @inject('VideosRepository')
+    private videosRepository: IVideosRepository
+  ) {}
 
   public async execute({
     video_id,

@@ -1,8 +1,10 @@
+import { injectable, inject } from 'tsyringe';
+
 import Video from '@modules/videos/infra/typeorm/entities/Video';
 
 import AppError from '@shared/errors/AppError';
 
-import IStorageProvider from '@shared/providers/StorageProvider/models/IStorageProvider';
+import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import IVideosRepository from '../repositories/IVideosRepository';
 
 interface IRequest {
@@ -10,10 +12,12 @@ interface IRequest {
   user_id: string;
   video_filename: string;
 }
-
+@injectable()
 class UploadVideoService {
   constructor(
+    @inject('VideosRepository')
     private videosRepository: IVideosRepository,
+    @inject('VideoStorageProvider')
     private storageProvider: IStorageProvider
   ) {}
 
