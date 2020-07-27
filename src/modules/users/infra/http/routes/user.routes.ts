@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, request, response } from 'express';
 import multer from 'multer';
 import { container } from 'tsyringe';
 import { celebrate, Joi, Segments } from 'celebrate';
@@ -9,6 +9,7 @@ import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenti
 
 import CreateUserService from '@modules/users/services/CreateUserService';
 import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
+import ShowProfileService from '@modules/users/services/ShowProfileService';
 
 const upload = multer(uploadConfig.multer);
 
@@ -33,6 +34,15 @@ userRouter.post(
     return response.json(classToClass(user));
   }
 );
+
+userRouter.get('/', ensureAuthenticated, async (request, response) => {
+  const user_id = request.user.id;
+  const showProfileService = container.resolve(ShowProfileService);
+
+  const user = await showProfileService.execute({ user_id });
+
+  return response.json(classToClass(user));
+});
 
 userRouter.patch(
   '/avatar',
