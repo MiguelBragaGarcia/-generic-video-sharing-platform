@@ -2,6 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import { container } from 'tsyringe';
 import { celebrate, Joi, Segments } from 'celebrate';
+import { classToClass } from 'class-transformer';
 
 import uploadConfig from '@config/upload';
 import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenticated';
@@ -27,9 +28,9 @@ userRouter.post(
 
     const { name, email, password } = request.body;
 
-    const newUser = await createUserService.execute({ name, password, email });
+    const user = await createUserService.execute({ name, password, email });
 
-    return response.json(newUser);
+    return response.json(classToClass(user));
   }
 );
 
@@ -45,9 +46,7 @@ userRouter.patch(
       avatarFilename: request.file.filename,
     });
 
-    delete user.password;
-
-    return response.json(user);
+    return response.json(classToClass(user));
   }
 );
 

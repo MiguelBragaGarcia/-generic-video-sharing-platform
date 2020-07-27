@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenticated';
 import UpdateUserProfileService from '@modules/users/services/UpdateUserProfileService';
@@ -34,9 +35,7 @@ profileRouter.put(
       old_password,
     });
 
-    delete user.password;
-
-    return response.json(user);
+    return response.json(classToClass(user));
   }
 );
 

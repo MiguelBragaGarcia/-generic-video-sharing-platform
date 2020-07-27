@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import multer from 'multer';
 import { container } from 'tsyringe';
+import { celebrate, Segments, Joi } from 'celebrate';
+import { classToClass } from 'class-transformer';
 
 import uploadConfig from '@config/upload';
 import UploadVideoService from '@modules/videos/services/UploadVideoService';
@@ -9,7 +11,6 @@ import DeleteVideoService from '@modules/videos/services/DeleteVideoService';
 import UpdateVideoService from '@modules/videos/services/UpdateVideoService';
 
 import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenticated';
-import { celebrate, Segments, Joi } from 'celebrate';
 
 const videoRouter = Router();
 const upload = multer(uploadConfig.multer);
@@ -25,9 +26,7 @@ videoRouter.post('/', async (request, response) => {
     user_id,
   });
 
-  delete video.user.password;
-
-  return response.json(video);
+  return response.json(classToClass(video));
 });
 
 videoRouter.put(
@@ -52,9 +51,7 @@ videoRouter.put(
       description,
     });
 
-    delete video.user.password;
-
-    return response.json(video);
+    return response.json(classToClass(video));
   }
 );
 
@@ -97,9 +94,7 @@ videoRouter.patch(
       video_filename: request.file.filename,
     });
 
-    delete video.user.password;
-
-    return response.json(video);
+    return response.json(classToClass(video));
   }
 );
 

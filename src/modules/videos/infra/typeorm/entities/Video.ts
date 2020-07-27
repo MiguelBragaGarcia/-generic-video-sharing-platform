@@ -8,6 +8,8 @@ import {
   JoinColumn,
 } from 'typeorm';
 
+import { Expose } from 'class-transformer';
+
 import User from '@modules/users/infra/typeorm/entities/User';
 
 @Entity('videos')
@@ -36,6 +38,15 @@ class Video {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Expose({ name: 'video_url' })
+  getVideoUrl(): string | null {
+    if (this.video !== '') {
+      return `http://localhost:3333/files/${this.video}`;
+    }
+
+    return null;
+  }
 }
 
 export default Video;
