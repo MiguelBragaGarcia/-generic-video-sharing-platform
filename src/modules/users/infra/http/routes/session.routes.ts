@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { container } from 'tsyringe';
+
 import { celebrate, Joi, Segments } from 'celebrate';
 
-import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
-import { classToClass } from 'class-transformer';
+import SessionsController from '../controllers/SessionsController';
 
 const sessionRouter = Router();
+const sessionsController = new SessionsController();
 
 sessionRouter.post(
   '/',
@@ -15,18 +15,7 @@ sessionRouter.post(
       password: Joi.string().required(),
     },
   }),
-  async (request, response) => {
-    const authenticateUserService = container.resolve(AuthenticateUserService);
-
-    const { email, password } = request.body;
-
-    const { user, token } = await authenticateUserService.execute({
-      email,
-      password,
-    });
-
-    return response.json({ user: classToClass(user), token });
-  }
+  sessionsController.create
 );
 
 export default sessionRouter;
