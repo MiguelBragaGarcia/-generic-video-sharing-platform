@@ -6,7 +6,7 @@ import ISendEmailDTO from '../dtos/ISendEmailDTO';
 import IMailTemplateProvider from '../../MailTemplateProvider/models/IMailTemplateProvider';
 
 @injectable()
-class EtherialMailProvider implements IMailProvider {
+export default class EtherialMailProvider implements IMailProvider {
   private client: Transporter;
 
   constructor(
@@ -34,6 +34,7 @@ class EtherialMailProvider implements IMailProvider {
     subject,
     templateData,
   }: ISendEmailDTO): Promise<void> {
+    console.log(this.client);
     const message = await this.client.sendMail({
       from: {
         name: from?.name || 'Equipe NOME DA PLATAFORMA',
@@ -51,5 +52,3 @@ class EtherialMailProvider implements IMailProvider {
     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(message));
   }
 }
-
-export default EtherialMailProvider;
