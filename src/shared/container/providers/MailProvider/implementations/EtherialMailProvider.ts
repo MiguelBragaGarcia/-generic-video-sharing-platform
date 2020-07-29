@@ -23,7 +23,6 @@ export default class EtherialMailProvider implements IMailProvider {
           pass: account.pass,
         },
       });
-
       this.client = transporter;
     });
   }
@@ -34,7 +33,6 @@ export default class EtherialMailProvider implements IMailProvider {
     subject,
     templateData,
   }: ISendEmailDTO): Promise<void> {
-    console.log(this.client);
     const message = await this.client.sendMail({
       from: {
         name: from?.name || 'Equipe NOME DA PLATAFORMA',
