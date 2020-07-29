@@ -24,5 +24,9 @@ class UserTokensRepository implements IUserTokenRepository {
 
     return userToken;
   }
+
+  public async save(token: UserToken): Promise<UserToken> {
+    return this.ormRepository.save(token);
+  }
 }
 export default UserTokensRepository;
