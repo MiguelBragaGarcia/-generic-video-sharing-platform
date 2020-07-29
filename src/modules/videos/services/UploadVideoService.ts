@@ -29,10 +29,12 @@ class UploadVideoService {
     const video = await this.videosRepository.findById(video_id);
 
     if (!video) {
+      await this.storageProvider.deleteFileFailUpload(video_filename);
       throw new AppError('Invalid video ID');
     }
 
     if (video.user.id !== user_id) {
+      await this.storageProvider.deleteFileFailUpload(video_filename);
       throw new AppError("You cannot change someone else's video");
     }
 
