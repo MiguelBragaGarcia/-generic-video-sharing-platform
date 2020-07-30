@@ -3,6 +3,7 @@ import path from 'path';
 
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import AppError from '@shared/errors/AppError';
+import IQueueProvider from '@shared/container/providers/QueueProvider/models/IQueueProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IUserTokenRepository from '../repositories/IUserTokenRepository';
 
@@ -13,8 +14,11 @@ interface IRequest {
 @injectable()
 class SendForgotEmailPassword {
   constructor(
-    @inject('MailProvider')
-    private mailProvider: IMailProvider,
+    // @inject('MailProvider')
+    // private mailProvider: IMailProvider,
+
+    @inject('QueueProvider')
+    private queueProvider: IQueueProvider,
 
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -39,7 +43,7 @@ class SendForgotEmailPassword {
       'forgot_password.hbs'
     );
 
-    await this.mailProvider.sendMail({
+    const emailData = {
       to: {
         name: user.name,
         email: user.email,
@@ -52,7 +56,24 @@ class SendForgotEmailPassword {
           link: `http://localhost:3000/reset-password?token=${token}`,
         },
       },
-    });
+    };
+
+    await this.queueProvider.add({ queue: 'CancellationMail', job: emailData });
+
+    // await this.mailProvider.sendMail({
+    //   to: {
+    //     name: user.name,
+    //     email: user.email,
+    //   },
+    //   subject: '[NOME DA PLATAFORMA] Recuperação de senha',
+    //   templateData: {
+    //     file: forgotPasswordTemplate,
+    //     variables: {
+    //       name: user.name,
+    //       link: `http://localhost:3000/reset-password?token=${token}`,
+    //     },
+    //   },
+    // });
   }
 }
 
