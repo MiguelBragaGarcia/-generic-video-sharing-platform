@@ -1,6 +1,6 @@
 import Bee from 'bee-queue';
 import { container } from 'tsyringe';
-import CancellationMail from '@modules/users/jobs/CancellationMail'; // Trocar para send email
+import SendForgotPasswordEmail from '@modules/users/jobs/SendForgotPasswordEmail';
 
 import IQueueProvider from '../models/IQueueProvider';
 
@@ -9,9 +9,9 @@ import IAddJobDTO from '../dtos/IAddJobDTO';
 import IFailJobDTO from '../dtos/IFailJobDTO';
 import IQueueDTO from '../dtos/IQueueDTO';
 
-const cancellationMail = container.resolve(CancellationMail);
+const sendForgotPasswordEmail = container.resolve(SendForgotPasswordEmail);
 
-const jobs = [cancellationMail];
+const jobs = [sendForgotPasswordEmail];
 
 class BeeQueueProvider implements IQueueProvider {
   private queues: IQueueDTO;
@@ -26,7 +26,7 @@ class BeeQueueProvider implements IQueueProvider {
       this.queues[key] = {
         bee: new Bee(key, {
           redis: {
-            host: 'http://localhost',
+            host: '127.0.0.1',
             port: 6379,
           },
         }),
@@ -43,12 +43,12 @@ class BeeQueueProvider implements IQueueProvider {
   public async processQueue(): Promise<void> {
     jobs.forEach((job) => {
       const { bee, handle } = this.queues[job.key];
-      bee.on('failed', this.handleFailure).process(handle);
+      bee.on('failed', this.handleFailure()).process(handle);
     });
   }
 
   handleFailure({ job, err }: IFailJobDTO): void {
-    console.log(`Queue: ${job.queue.name} :Failed`, err);
+    console.log(`Queue:  ${job.queue.name} :Failed`, err);
   }
 }
 
