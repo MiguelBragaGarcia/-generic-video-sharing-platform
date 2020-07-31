@@ -1,6 +1,6 @@
 import './StorageProvider';
-import './QueueProvider';
 import './MailTemplateProvider';
 import './MailProvider';
+import './QueueProvider';
 
 import '@modules/users/provider/HashProvider';
