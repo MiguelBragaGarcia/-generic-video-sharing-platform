@@ -1,7 +1,11 @@
 import 'reflect-metadata';
 
-import Queue from '@shared/container/providers/QueueProvider/implementations/BeeQueueProvider';
+import '@shared/infra/typeorm';
+import '@shared/container';
 
-const queue = new Queue();
+import Queue from '@shared/container/providers/QueueProvider/implementations/BeeQueueProvider';
+import { container } from 'tsyringe';
+
+const queue = container.resolve(Queue);
 
 queue.processQueue();
