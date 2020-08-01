@@ -14,17 +14,19 @@ O projeto foi desenvolvido para matar uma curiosidade que tinha sobre plataforma
 
 <pre>docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d postgres</pre>
 
-- Crie no docker uma instância mongo
+- Crie no docker uma instância MONGO
 
 <pre> docker run --name some-mongo -p 27017:27017 -d mongo</pre>
 
-- Crie no docker uma instância redis
+- Crie no docker uma instância REDIS
 
 <pre> docker run --name some-redis -p 6379:6379 -d redis:alpine</pre>
 
-- Crie uma TABELA ,manualmente, na intância POSTGRESQL criada no passo anterior
+- Configure o arquivo ormconfig.json.example com os dados que foram gerados anteriormente
 
-- Configure o arquivo ormconfig.json.example com as credênciais criadas anteriormente
+* Crie uma DATABASE ,manualmente, na intância POSTGRESQL criada anteriormente, com o mesmo nome dado a database no arquivo ormconfig.json
+
+* Crie uma DATABASE ,manualmente, na intância MONGO criada anteriormente, com o mesmo nome dado a database no arquivo ormconfig.json
 
 - Instale todas as dependências
 
