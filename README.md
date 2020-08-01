@@ -42,7 +42,7 @@ O projeto foi desenvolvido para matar uma curiosidade que tinha sobre plataforma
 
 - Execute o servidor de envios de email
 
-<pre>yarn dev:queue<pre>
+<pre>yarn dev:queue</pre>
 
 ## Como testar a aplicação
 
