@@ -1,6 +1,6 @@
-import IAddJob from '../dtos/IAddJobDTO';
+import IQueueJobDTO from '../dtos/IQueueJobDTO';
 
 export default interface IQueueProvider {
-  add(data: IAddJob): Promise<void>;
-  processQueue(): Promise<void>;
+  addJob(data: IQueueJobDTO): Promise<void>;
+  processQueue(): void;
 }

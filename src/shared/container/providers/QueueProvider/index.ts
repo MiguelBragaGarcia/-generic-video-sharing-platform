@@ -1,6 +1,6 @@
 import { container } from 'tsyringe';
 
 import IQueueProvider from './models/IQueueProvider';
-import BeeQueueProvider from './implementations/BeeQueueProvider';
+import BullQueueProvider from './implementations/BullQueueProvider';
 
-container.registerSingleton<IQueueProvider>('QueueProvider', BeeQueueProvider);
+container.registerSingleton<IQueueProvider>('QueueProvider', BullQueueProvider);
