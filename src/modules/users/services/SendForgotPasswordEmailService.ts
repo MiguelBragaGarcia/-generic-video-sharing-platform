@@ -24,6 +24,10 @@ class SendForgotPasswordEmailService {
     private queueProvider: IQueueProvider
   ) {}
 
+  get key(): string {
+    return 'ForgotPasswordEmail';
+  }
+
   public async execute({ email }: IRequest): Promise<void> {
     const user = await this.usersRepository.findByEmail(email);
 
@@ -55,8 +59,8 @@ class SendForgotPasswordEmailService {
       },
     };
 
-    await this.queueProvider.add({
-      queue: 'SendForgotPasswordEmail',
+    await this.queueProvider.addJob({
+      key: 'ForgotPasswordEmail',
       job: emailData,
     });
   }
