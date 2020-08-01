@@ -35,7 +35,7 @@ class User {
   @Expose({ name: 'avatar_url' })
   getAvatar_url(): string | null {
     if (this.avatar) {
-      return `http://localhost:3333/files/${this.avatar}`;
+      return `${process.env.APP_API_URL}/files/${this.avatar}`;
     }
 
     return null;

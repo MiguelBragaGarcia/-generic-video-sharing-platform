@@ -42,7 +42,7 @@ class Video {
   @Expose({ name: 'video_url' })
   getVideoUrl(): string | null {
     if (this.video !== '') {
-      return `http://localhost:3333/files/${this.video}`;
+      return `${process.env.APP_API_URL}/files/${this.video}`;
     }
 
     return null;
