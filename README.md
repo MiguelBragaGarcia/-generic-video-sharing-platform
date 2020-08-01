@@ -14,6 +14,10 @@ O projeto foi desenvolvido para matar uma curiosidade que tinha sobre plataforma
 
 <pre>docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d postgres</pre>
 
+- Crie no docker uma instância redis
+
+<pre> docker run --name some-redis -p 6379:6379 -d redis:alpine</pre>
+
 - Crie uma TABELA ,manualmente, na intância POSTGRESQL criada no passo anterior
 
 - Configure o arquivo ormconfig.json.example com as credênciais criadas anteriormente
@@ -29,6 +33,10 @@ O projeto foi desenvolvido para matar uma curiosidade que tinha sobre plataforma
 - Execute o servidor
 
 <pre>yarn dev:server</pre>
+
+- Execute o servidor de envios de email
+
+<pre>yarn dev:queue<pre>
 
 ## Como testar a aplicação
 
