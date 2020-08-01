@@ -1,23 +1,22 @@
-import { injectable, inject } from 'tsyringe';
-
-import IJobsDTO from '@shared/container/providers/QueueProvider/dtos/IJobsDTO';
-import ISendEmailDTO from '@shared/container/providers/MailProvider/dtos/ISendEmailDTO';
+import { inject, injectable } from 'tsyringe';
 
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
+import ISendEmailDTO from '@shared/container/providers/MailProvider/dtos/ISendEmailDTO';
+import IJobs from './models/IJobs';
 
 @injectable()
-class SendForgotPasswordEmail implements IJobsDTO {
+class SendForgotPasswordEmail implements IJobs {
   constructor(
     @inject('MailProvider')
     private mailProvider: IMailProvider
   ) {}
 
   get key(): string {
-    return 'SendForgotPasswordEmail';
+    return 'ForgotPasswordEmail';
   }
 
-  async handle(data: ISendEmailDTO): Promise<void> {
-    await this.mailProvider.sendMail(data);
+  public async executeJob(emailData: ISendEmailDTO): Promise<void> {
+    await this.mailProvider.sendMail(emailData);
   }
 }
 
