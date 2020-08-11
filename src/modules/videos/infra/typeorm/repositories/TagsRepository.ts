@@ -20,7 +20,7 @@ class TagsRepository implements ITagsRepository {
   public async findByTags(data: string[]): Promise<Tag[] | undefined> {
     const tags = await this.ormRepository.find({
       where: {
-        tags: data,
+        tags: { $in: data },
       },
     });
 
