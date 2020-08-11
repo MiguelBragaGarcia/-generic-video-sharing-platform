@@ -5,7 +5,7 @@ import FindVideoService from '@modules/videos/services/FindVideoService';
 
 class SearchController {
   public async show(request: Request, response: Response): Promise<Response> {
-    const searchTags = request.body;
+    const { searchTags } = request.body;
     const findVideoService = container.resolve(FindVideoService);
 
     const videos = await findVideoService.execute(searchTags);
