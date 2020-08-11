@@ -8,15 +8,15 @@ import {
 } from 'typeorm';
 
 @Entity('video_tags')
-class SearchTag {
+class Tag {
   @ObjectIdColumn()
   id: ObjectID;
 
-  @Column()
-  key: string;
-
   @Column('uuid')
-  video_ids: string[];
+  video_id: string;
+
+  @Column()
+  tags: string[];
 
   @CreateDateColumn()
   created_at: Date;
@@ -25,4 +25,4 @@ class SearchTag {
   updated_at: Date;
 }
 
-export default SearchTag;
+export default Tag;

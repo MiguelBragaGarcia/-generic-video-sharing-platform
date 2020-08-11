@@ -1,9 +1,11 @@
-import { injectable, inject } from 'tsyringe';
+import { injectable, inject, container } from 'tsyringe';
 
 import Video from '@modules/videos/infra/typeorm/entities/Video';
 import AppError from '@shared/errors/AppError';
 
 import IVideosRepository from '../repositories/IVideosRepository';
+import CreateVideoTagService from './CreateVideoTagService';
+import CreateVideoService from './CreateVideoService';
 
 interface IRequest {
   video_id: string;
@@ -24,6 +26,7 @@ class UpdateVideoService {
     title,
     description,
   }: IRequest): Promise<Video> {
+    const createVideoTags = container.resolve(CreateVideoTagService);
     const video = await this.videosRepository.findById(video_id);
 
     if (!video) {
@@ -37,6 +40,8 @@ class UpdateVideoService {
     // View count entry her.
     video.title = title;
     video.description = description;
+
+    await createVideoTags.execute(video);
 
     await this.videosRepository.save(video);
 

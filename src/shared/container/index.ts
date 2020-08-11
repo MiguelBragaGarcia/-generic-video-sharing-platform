@@ -11,6 +11,9 @@ import VideosRepository from '@modules/videos/infra/typeorm/repositories/VideosR
 import IUserTokensRepository from '@modules/users/repositories/IUserTokenRepository';
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokenRepository';
 
+import ITagsRepository from '@modules/videos/repositories/ITagsRepository';
+import TagsRepository from '@modules/videos/infra/typeorm/repositories/TagsRepository';
+
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository
@@ -25,3 +28,5 @@ container.registerSingleton<IUserTokensRepository>(
   'UserTokensRepository',
   UserTokensRepository
 );
+
+container.registerSingleton<ITagsRepository>('TagsRepository', TagsRepository);

@@ -5,6 +5,7 @@ import userRouter from '@modules/users/infra/http/routes/user.routes';
 import sessionRouter from '@modules/users/infra/http/routes/session.routes';
 import passwordRouter from '@modules/users/infra/http/routes/password.routes';
 import videoRouter from '@modules/videos/infra/routes/video.routes';
+import searchRouter from '@modules/videos/infra/routes/search.routes';
 
 const routes = Router();
 
@@ -13,5 +14,6 @@ routes.use('/sessions', sessionRouter);
 routes.use('/profile', profileRouter);
 routes.use('/videos', videoRouter);
 routes.use('/password', passwordRouter);
+routes.use('/search', searchRouter);
 
 export default routes;
