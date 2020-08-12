@@ -12,19 +12,19 @@ class TagsRepository implements ITagsRepository {
   }
 
   public async create({ tags, video_id }: ICreateIndexTagDTO): Promise<void> {
-    const indexTags = this.ormRepository.create({ video_id, tags });
+    const newTag = this.ormRepository.create({ video_id, tags });
 
-    await this.ormRepository.save(indexTags);
+    await this.ormRepository.save(newTag);
   }
 
-  public async findByTags(data: string[]): Promise<Tag[] | undefined> {
-    const tags = await this.ormRepository.find({
+  public async findByTags(tags: string[]): Promise<Tag[] | undefined> {
+    const videosContainingTheTags = await this.ormRepository.find({
       where: {
-        tags: { $in: data },
+        tags: { $in: tags },
       },
     });
 
-    return tags;
+    return videosContainingTheTags;
   }
 }
 
