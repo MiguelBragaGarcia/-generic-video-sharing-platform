@@ -37,7 +37,6 @@ class UpdateVideoService {
       throw new AppError('You can only change your own videos');
     }
 
-    // View count entry her.
     video.title = title;
     video.description = description;
 
