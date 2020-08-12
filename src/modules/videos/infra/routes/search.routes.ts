@@ -13,7 +13,7 @@ searchRouter.post(
       searchTags: Joi.string().required(),
     },
   }),
-  searchController.show
+  searchController.create
 );
 
 export default searchRouter;
