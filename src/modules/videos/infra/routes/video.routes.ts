@@ -11,9 +11,30 @@ import VideosController from '../controllers/VideosController';
 const videoRouter = Router();
 const upload = multer(uploadConfig.multer);
 
-videoRouter.use(ensureAuthenticated);
 const uploadVideoController = new UploadVideoController();
 const videosController = new VideosController();
+
+videoRouter.get(
+  '/',
+  celebrate({
+    [Segments.QUERY]: {
+      page: Joi.string().required(),
+    },
+  }),
+  videosController.index
+);
+
+videoRouter.get(
+  '/:video_id',
+  celebrate({
+    [Segments.PARAMS]: {
+      video_id: Joi.string().uuid().required(),
+    },
+  }),
+  videosController.show
+);
+
+videoRouter.use(ensureAuthenticated);
 
 videoRouter.post('/', videosController.create);
 
