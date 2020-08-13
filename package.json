@@ -8,7 +8,8 @@
     "dev:server": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts ",
     "dev:queue": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/shared/infra/http/queue.ts",
     "start": "ts-node-dev src/shared/infra/http/server.ts",
-    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "test": "jest"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^3.6.1",
@@ -40,6 +41,7 @@
     "@types/bcrypt": "^3.0.0",
     "@types/bull": "^3.14.0",
     "@types/express": "^4.17.7",
+    "@types/jest": "^26.0.9",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/multer": "^1.4.3",
     "@types/nodemailer": "^6.4.0",
@@ -48,7 +50,9 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.4.0",
     "prettier": "^2.0.5",
+    "ts-jest": "^26.2.0",
     "ts-node-dev": "^1.0.0-pre.52",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.9.7"
