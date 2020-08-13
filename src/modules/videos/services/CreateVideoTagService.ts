@@ -20,10 +20,18 @@ class CreateVideoTagService {
       return tagsArray.indexOf(tag) === index;
     });
 
-    await this.tagsRepository.create({
-      video_id: id,
-      tags: tagsWithoutDuplicates,
-    });
+    const hasTagsInDatabase = await this.tagsRepository.findByVideoId(id);
+
+    if (!hasTagsInDatabase) {
+      await this.tagsRepository.create({
+        video_id: id,
+        tags: tagsWithoutDuplicates,
+      });
+    } else {
+      hasTagsInDatabase.tags = tagsWithoutDuplicates;
+
+      await this.tagsRepository.save(hasTagsInDatabase);
+    }
   }
 }
 
