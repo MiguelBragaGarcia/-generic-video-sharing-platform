@@ -2,6 +2,8 @@ import Queue, { Queue as BullClient } from 'bull';
 import { container } from 'tsyringe';
 
 import SendForgotPasswordEmail from '@modules/users/jobs/SendForgotPasswordEmail';
+import CreateVideoTag from '@modules/videos/jobs/CreateVideoTag';
+
 import queueConfig from '@config/queue';
 
 import IQueueProvider from '../models/IQueueProvider';
@@ -9,7 +11,9 @@ import IQueueJobDTO from '../dtos/IQueueJobDTO';
 
 const sendForgotPasswordEmail = container.resolve(SendForgotPasswordEmail);
 
-const jobs = [sendForgotPasswordEmail];
+const createVideoTag = new CreateVideoTag();
+
+const jobs = [sendForgotPasswordEmail, createVideoTag];
 
 interface IQueue {
   [key: string]: {
