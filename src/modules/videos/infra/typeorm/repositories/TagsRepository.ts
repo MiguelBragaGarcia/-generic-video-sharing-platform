@@ -26,6 +26,20 @@ class TagsRepository implements ITagsRepository {
 
     return videosContainingTheTags;
   }
+
+  public async save(tag: Tag): Promise<void> {
+    await this.ormRepository.save(tag);
+  }
+
+  public async findByVideoId(video_id: string): Promise<Tag | undefined> {
+    const tag = await this.ormRepository.findOne({
+      where: {
+        video_id,
+      },
+    });
+
+    return tag;
+  }
 }
 
 export default TagsRepository;
