@@ -36,8 +36,6 @@ class CreateUserService {
       email,
     });
 
-    delete newUser.password;
-
     return newUser;
   }
 }
