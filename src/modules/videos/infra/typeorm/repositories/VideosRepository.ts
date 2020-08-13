@@ -2,7 +2,7 @@ import { Repository, getRepository } from 'typeorm';
 
 import IVideosRepository from '@modules/videos/repositories/IVideosRepository';
 import User from '@modules/users/infra/typeorm/entities/User';
-import IFindVideosDTO from '@modules/videos/dtos/IFindVideosDTO';
+import IPaginateOptionsDTO from '@modules/videos/dtos/IPaginateOptionsDTO';
 import Video from '../entities/Video';
 
 class VideosRepository implements IVideosRepository {
@@ -45,7 +45,7 @@ class VideosRepository implements IVideosRepository {
   public async find({
     take,
     skip,
-  }: IFindVideosDTO): Promise<Video[] | undefined> {
+  }: IPaginateOptionsDTO): Promise<Video[] | undefined> {
     return this.ormRepository.find({
       take,
       skip,
