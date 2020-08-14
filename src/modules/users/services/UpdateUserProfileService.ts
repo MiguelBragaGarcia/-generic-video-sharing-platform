@@ -10,7 +10,7 @@ interface IRequest {
   name: string;
   email: string;
   old_password?: string;
-  password: string;
+  password?: string;
 }
 @injectable()
 class UpdateProfileService {
