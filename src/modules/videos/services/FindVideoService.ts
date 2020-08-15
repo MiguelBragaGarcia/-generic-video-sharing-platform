@@ -15,29 +15,24 @@ class FindVideoService {
     private tagsRepository: ITagsRepository
   ) {}
 
-  public async execute(
-    searchTags: string
-  ): Promise<(Video | undefined)[] | string> {
+  public async execute(searchTags: string): Promise<Video[] | undefined> {
     const sanitizeSearchTags = sanitizeString(searchTags);
 
     const videosContainingTheSearchedTags = await this.tagsRepository.findByTags(
       sanitizeSearchTags
     );
 
+    const ids: string[] = [];
+
     if (!videosContainingTheSearchedTags) {
-      return 'No videos were found';
+      return [];
     }
 
-    // Faz a busca no banco SQL e retorna os vídeos.
-    const getVideos = async () => {
-      return Promise.all(
-        videosContainingTheSearchedTags.map((tag) => {
-          return this.videosRepository.findById(tag.video_id);
-        })
-      );
-    };
+    videosContainingTheSearchedTags.forEach((tag) => {
+      ids.push(tag.video_id);
+    });
 
-    const videos = getVideos();
+    const videos = await this.videosRepository.findByIds(ids);
 
     return videos;
   }
