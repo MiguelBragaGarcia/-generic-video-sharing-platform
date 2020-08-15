@@ -78,8 +78,6 @@ describe('FindVideo', () => {
   it('Should get a empty list of videos', async () => {
     const listVideos = await findVideoService.execute('example');
 
-    console.log(listVideos);
-
     expect(listVideos).toStrictEqual([]);
   });
 });
