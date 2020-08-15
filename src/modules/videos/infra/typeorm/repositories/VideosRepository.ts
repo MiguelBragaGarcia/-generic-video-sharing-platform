@@ -51,6 +51,10 @@ class VideosRepository implements IVideosRepository {
       skip,
     });
   }
+
+  public async findByIds(ids: string[]): Promise<Video[] | undefined> {
+    return this.ormRepository.findByIds(ids);
+  }
 }
 
 export default VideosRepository;
