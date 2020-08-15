@@ -4,7 +4,7 @@ import ITagsRepository from '@modules/videos/repositories/ITagsRepository';
 import ICreateIndexTagDTO from '@modules/videos/dtos/ICreateIndexTagDTO';
 import Tag from '@modules/videos/infra/typeorm/schemas/Tag';
 
-class TagsRepository implements ITagsRepository {
+class FakeTagsRepository implements ITagsRepository {
   private tagsRepository: Tag[] = [];
 
   public async create({ tags, video_id }: ICreateIndexTagDTO): Promise<void> {
@@ -16,7 +16,24 @@ class TagsRepository implements ITagsRepository {
   }
 
   public async findByTags(tags: string[]): Promise<Tag[] | undefined> {
-    // Tem que fazer esse método ainda.
+    const videosWithTags = this.tagsRepository.filter((tag) => {
+      const match = tags.find((word) => {
+        const matchWordInTag = tag.tags.find((wordInTag) => wordInTag === word);
+
+        if (matchWordInTag) {
+          return true;
+        }
+        return false;
+      });
+
+      if (match) {
+        return true;
+      }
+
+      return false;
+    });
+
+    return videosWithTags;
   }
 
   public async save(tag: Tag): Promise<void> {
@@ -32,4 +49,4 @@ class TagsRepository implements ITagsRepository {
   }
 }
 
-export default TagsRepository;
+export default FakeTagsRepository;
