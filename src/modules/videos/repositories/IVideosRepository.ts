@@ -4,6 +4,7 @@ import IPaginateOptionsDTO from '../dtos/IPaginateOptionsDTO';
 
 export default interface IVideosRepository {
   findById(id: string): Promise<Video | undefined>;
+  findByIds(ids: string[]): Promise<Video[] | undefined>;
   create(user: User): Promise<Video>;
   save(video: Video): Promise<Video>;
   delete(video_id: string): Promise<void>;
