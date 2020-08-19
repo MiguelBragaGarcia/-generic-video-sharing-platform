@@ -96,13 +96,13 @@ export const LoginButton = styled.button`
   color: #3052d9;
 
   svg {
-    margin-right: 5px;
+    margin-right: 0.5rem;
   }
 `;
 
 export const Content = styled.div`
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
 `;
 
 export const VideoContainer = styled.div`
@@ -161,16 +161,18 @@ export const VideoInfo = styled.div`
 
   div {
     flex: 1;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-
     margin-left: 2rem;
     text-align: left;
 
     strong {
+      width: 33rem;
+      font-weight: bold;
+      font-family: 'Poppins';
       font-size: 1.6rem;
-      font-family: 'Poppins', sans-serif;
+      display: block;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
 
     p {
