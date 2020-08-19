@@ -12,6 +12,7 @@ export const HeaderContainer = styled.div`
   width: 90vw;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
 export const MainPageButton = styled.button`
@@ -31,7 +32,6 @@ export const MainPageButton = styled.button`
 
 export const SearchBar = styled.div`
   display: flex;
-  width: 40rem;
 
   input {
     width: 17rem;
@@ -54,15 +54,30 @@ export const SearchBar = styled.div`
     border-style: none;
     border-radius: 0 1rem 1rem 0;
   }
+
+  @media (min-width: 700px) {
+    input {
+      width: 40rem;
+    }
+  }
+`;
+
+export const ButtonActionsContainer = styled.div`
+  display: flex;
 `;
 
 export const SendVideoButton = styled.button`
   display: flex;
-  margin: 0 1rem;
   align-items: center;
   justify-content: center;
+
+  margin: 0 1rem;
   background: none;
   border-style: none;
+
+  @media (min-width: 700px) {
+    margin-right: 3rem;
+  }
 `;
 
 export const LoginButton = styled.button`
@@ -82,5 +97,84 @@ export const LoginButton = styled.button`
 
   svg {
     margin-right: 5px;
+  }
+`;
+
+export const Content = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const VideoContainer = styled.div`
+  margin: 3rem auto;
+
+  display: grid;
+
+  grid-template-columns: 42rem;
+
+  @media (min-width: 850px) {
+    grid-template-columns: repeat(2, 42rem);
+    gap: 2rem;
+  }
+
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(3, 42rem);
+    gap: 2rem;
+  }
+`;
+
+export const Video = styled.button`
+  border-style: none;
+  background: #fff;
+  border-radius: 0 0 1rem 1rem;
+
+  > img {
+    width: 42rem;
+  }
+
+  & + button {
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 700px) {
+    > img {
+      width: 42rem;
+    }
+
+    & + button {
+      margin-top: 0;
+    }
+  }
+`;
+
+export const VideoInfo = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 0.2rem 1rem;
+
+  img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+  }
+
+  div {
+    flex: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    margin-left: 2rem;
+    text-align: left;
+
+    strong {
+      font-size: 1.6rem;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    p {
+      color: #333;
+    }
   }
 `;

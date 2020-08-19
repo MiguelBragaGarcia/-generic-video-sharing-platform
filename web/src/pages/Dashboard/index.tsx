@@ -9,9 +9,14 @@ import {
   Header,
   HeaderContainer,
   MainPageButton,
+  ButtonActionsContainer,
   SearchBar,
   LoginButton,
   SendVideoButton,
+  Content,
+  VideoContainer,
+  Video,
+  VideoInfo,
 } from './styles';
 
 const Dashboard: React.FC = () => (
@@ -29,16 +34,101 @@ const Dashboard: React.FC = () => (
           </button>
         </SearchBar>
 
-        <SendVideoButton>
-          <MdVideoCall size={30} />
-        </SendVideoButton>
+        <ButtonActionsContainer>
+          <SendVideoButton>
+            <MdVideoCall size={30} />
+          </SendVideoButton>
 
-        <LoginButton>
-          <FiLogIn size={24} />
-          Fazer Login
-        </LoginButton>
+          <LoginButton>
+            <FiLogIn size={24} />
+            Fazer Login
+          </LoginButton>
+        </ButtonActionsContainer>
       </HeaderContainer>
     </Header>
+
+    <Content>
+      <VideoContainer>
+        <Video>
+          <img
+            src="https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg"
+            alt="video thumb"
+          />
+          <VideoInfo>
+            <img
+              src="https://avatars0.githubusercontent.com/u/52131821?s=460&u=1c87b1763d932fcfc0fa0ce97aad157244a08bd4&v=4"
+              alt="avatar_url"
+            />
+
+            <div>
+              <strong>
+                Esse é um título de um vídeo, texto aleatórioa para preencher
+                multiplas
+              </strong>
+              <p>Jenkins Dota</p>
+              <p>30 mil vizualizações</p>
+            </div>
+          </VideoInfo>
+        </Video>
+
+        <Video>
+          <img
+            src="https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg"
+            alt="video thumb"
+          />
+          <VideoInfo>
+            <img
+              src="https://avatars0.githubusercontent.com/u/52131821?s=460&u=1c87b1763d932fcfc0fa0ce97aad157244a08bd4&v=4"
+              alt="avatar_url"
+            />
+
+            <div>
+              <strong>Esse é um título de um vídeo</strong>
+              <p>Jenkins Dota</p>
+              <p>30 mil vizualizações</p>
+            </div>
+          </VideoInfo>
+        </Video>
+
+        <Video>
+          <img
+            src="https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg"
+            alt="video thumb"
+          />
+          <VideoInfo>
+            <img
+              src="https://avatars0.githubusercontent.com/u/52131821?s=460&u=1c87b1763d932fcfc0fa0ce97aad157244a08bd4&v=4"
+              alt="avatar_url"
+            />
+
+            <div>
+              <strong>Esse é um título de um vídeo</strong>
+              <p>Jenkins Dota</p>
+              <p>30 mil vizualizações</p>
+            </div>
+          </VideoInfo>
+        </Video>
+
+        <Video>
+          <img
+            src="https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg"
+            alt="video thumb"
+          />
+          <VideoInfo>
+            <img
+              src="https://avatars0.githubusercontent.com/u/52131821?s=460&u=1c87b1763d932fcfc0fa0ce97aad157244a08bd4&v=4"
+              alt="avatar_url"
+            />
+
+            <div>
+              <strong>Esse é um título de um vídeo</strong>
+              <p>Jenkins Dota</p>
+              <p>30 mil vizualizações</p>
+            </div>
+          </VideoInfo>
+        </Video>
+      </VideoContainer>
+    </Content>
   </>
 );
 export default Dashboard;
