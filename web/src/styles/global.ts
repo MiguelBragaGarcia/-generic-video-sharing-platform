@@ -15,8 +15,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-body, input, button, textarea {
-
+body, input, button, textarea, p {
   font: 1.6rem "Poppins", sans-serif;
 }
 
@@ -24,6 +23,5 @@ body, input, button, textarea {
 button {
   cursor: pointer;
 }
-
 
 `;
