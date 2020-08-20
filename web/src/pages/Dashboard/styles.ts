@@ -13,6 +13,10 @@ export const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 export const MainPageButton = styled.button`

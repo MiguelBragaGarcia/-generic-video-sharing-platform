@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import { GoSearch } from 'react-icons/go';
 import { FiLogIn } from 'react-icons/fi';
 import { MdVideoCall } from 'react-icons/md';
+
+import api from '../../services/api';
 
 import logoImg from '../../assets/logo.svg';
 
@@ -39,10 +43,12 @@ const Dashboard: React.FC = () => (
             <MdVideoCall size={30} />
           </SendVideoButton>
 
-          <LoginButton>
-            <FiLogIn size={24} />
-            Fazer Login
-          </LoginButton>
+          <Link to="/login">
+            <LoginButton>
+              <FiLogIn size={24} />
+              Fazer Login
+            </LoginButton>
+          </Link>
         </ButtonActionsContainer>
       </HeaderContainer>
     </Header>
