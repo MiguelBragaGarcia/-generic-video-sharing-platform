@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 interface ContainerProps {
-  hasError?: boolean;
+  isErrored?: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -32,7 +32,7 @@ export const Container = styled.div<ContainerProps>`
   }
 
   ${(props) =>
-    props.hasError &&
+    props.isErrored &&
     css`
       border-color: #f00000;
 
