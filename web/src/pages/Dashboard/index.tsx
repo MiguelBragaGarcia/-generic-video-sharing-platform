@@ -43,7 +43,7 @@ const Dashboard: React.FC = () => (
             <MdVideoCall size={30} />
           </SendVideoButton>
 
-          <Link to="/login">
+          <Link to="/signin">
             <LoginButton>
               <FiLogIn size={24} />
               Fazer Login
