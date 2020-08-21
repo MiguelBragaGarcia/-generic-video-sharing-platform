@@ -18,6 +18,13 @@
   },
   "plugins": ["react", "@typescript-eslint", "react-hooks"],
   "rules": {
+    "no-confusing-arrow": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "@typescript-eslint/camelcase": "off",
+    "no-unused-expressions": "off",
+    "implicit-arrow-linebreak": "off",
+    "operator-linebreak": "off",
+    "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
