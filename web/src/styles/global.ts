@@ -15,13 +15,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-body, input, button, textarea, p, a {
+body, input, button, textarea, p, a, strong {
   font: 1.6rem "Poppins", sans-serif;
 }
 
 
 
-button {
+button, a {
   cursor: pointer;
 }
 
