@@ -9,6 +9,7 @@ interface IUploadAvatarConfig {
   tmpFolder: string;
   uploadAvatarFolder: string;
   uploadVideoFolder: string;
+  uploadThumbnailFolder: string;
 
   multer: {
     storage: StorageEngine;
@@ -19,6 +20,7 @@ export default {
   tmpFolder,
   uploadAvatarFolder: path.resolve(tmpFolder, 'avatar'),
   uploadVideoFolder: path.resolve(tmpFolder, 'videos'),
+  uploadThumbnailFolder: path.resolve(tmpFolder, 'thumbnails'),
 
   multer: {
     storage: multer.diskStorage({

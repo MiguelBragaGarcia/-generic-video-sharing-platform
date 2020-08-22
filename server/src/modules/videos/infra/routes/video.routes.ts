@@ -8,9 +8,12 @@ import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenti
 import UploadVideoController from '../controllers/UploadVideoController';
 import VideosController from '../controllers/VideosController';
 
+import UploadThumbnailController from '../controllers/UploadThumbnailController';
+
 const videoRouter = Router();
 const upload = multer(uploadConfig.multer);
 
+const uploadThumbnailController = new UploadThumbnailController();
 const uploadVideoController = new UploadVideoController();
 const videosController = new VideosController();
 
@@ -69,6 +72,17 @@ videoRouter.patch(
     },
   }),
   uploadVideoController.update
+);
+
+videoRouter.patch(
+  '/thumbnail',
+  upload.single('thumbnail'),
+  celebrate({
+    [Segments.BODY]: {
+      video_id: Joi.string().required(),
+    },
+  }),
+  uploadThumbnailController.update
 );
 
 export default videoRouter;

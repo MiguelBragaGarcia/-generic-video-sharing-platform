@@ -6,7 +6,7 @@ import cors from 'cors';
 import 'express-async-errors';
 import { errors } from 'celebrate';
 
-import uploadAvatarConfig from '@config/upload';
+import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
 import '@shared/infra/typeorm';
 import '@shared/container';
@@ -20,8 +20,9 @@ server.use(routes);
 
 server.use(
   '/files',
-  express.static(uploadAvatarConfig.uploadAvatarFolder),
-  express.static(uploadAvatarConfig.uploadVideoFolder)
+  express.static(uploadConfig.uploadAvatarFolder),
+  express.static(uploadConfig.uploadVideoFolder),
+  express.static(uploadConfig.uploadThumbnailFolder)
 );
 
 server.use(errors());

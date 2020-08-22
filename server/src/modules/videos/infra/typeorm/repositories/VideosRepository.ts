@@ -18,6 +18,7 @@ class VideosRepository implements IVideosRepository {
       title: '',
       description: '',
       video: '',
+      thumbnail: '',
       views: 0,
     });
 

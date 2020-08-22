@@ -33,11 +33,23 @@ class Video {
   @Column()
   views: number;
 
+  @Column()
+  thumbnail: string;
+
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Expose({ name: 'video_thumbnail' })
+  getThumbnailUrl(): string | null {
+    if (this.thumbnail !== '') {
+      return `${process.env.APP_API_URL}/files/${this.thumbnail}`;
+    }
+
+    return null;
+  }
 
   @Expose({ name: 'video_url' })
   getVideoUrl(): string | null {
