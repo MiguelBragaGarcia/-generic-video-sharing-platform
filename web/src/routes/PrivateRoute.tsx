@@ -8,6 +8,7 @@ interface ExtendRouteProps extends RouteProps {
 
 const PrivateRoute: React.FC<ExtendRouteProps> = ({
   component: Component,
+
   ...rest
 }) => {
   const { user } = useAuth();
