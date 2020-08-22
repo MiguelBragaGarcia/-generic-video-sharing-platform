@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { GoSearch } from 'react-icons/go';
@@ -23,171 +23,90 @@ import {
   VideoInfo,
 } from './styles';
 
-const Dashboard: React.FC = () => (
-  <>
-    <Header>
-      <HeaderContainer>
-        <MainPageButton>
-          <img src={logoImg} alt="logo" />
-        </MainPageButton>
+interface User {
+  id: string;
+  name: string;
+  avatar_url: string;
+}
 
-        <SearchBar>
-          <input type="text" placeholder="Buscar por vídeos" />
-          <button type="button">
-            <GoSearch size={24} color="#FFF" />
-          </button>
-        </SearchBar>
+interface VideoInfo {
+  id: string;
+  title: string;
+  description: string;
+  views: number;
+  video_url: string;
+  video_thumbnail: string;
+  user: User;
+}
 
-        <ButtonActionsContainer>
-          <SendVideoButton>
-            <MdVideoCall size={30} />
-          </SendVideoButton>
+const Dashboard: React.FC = () => {
+  const [videos, setVideos] = useState<VideoInfo[]>([]);
 
-          <Link to="/signin">
-            <LoginButton>
-              <FiLogIn size={24} />
-              Fazer Login
-            </LoginButton>
-          </Link>
-        </ButtonActionsContainer>
-      </HeaderContainer>
-    </Header>
+  useEffect(() => {
+    async function loadVideoList() {
+      const response = await api.get<VideoInfo[]>('videos', {
+        params: {
+          page: 1,
+        },
+      });
 
-    <Content>
-      <VideoContainer>
-        <Video>
-          <img
-            src="https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg"
-            alt="video thumb"
-          />
-          <VideoInfo>
-            <img
-              src="https://avatars0.githubusercontent.com/u/52131821?s=460&u=1c87b1763d932fcfc0fa0ce97aad157244a08bd4&v=4"
-              alt="avatar_url"
-            />
+      setVideos(response.data);
+    }
 
-            <div>
-              <strong>
-                Esse é um título de um vídeo, texto aleatórioa para preencher
-                multiplas
-              </strong>
-              <p>Jenkins Dota</p>
-              <p>30 mil vizualizações</p>
-            </div>
-          </VideoInfo>
-        </Video>
+    loadVideoList();
+  }, []);
 
-        <Video>
-          <img
-            src="https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg"
-            alt="video thumb"
-          />
-          <VideoInfo>
-            <img
-              src="https://avatars0.githubusercontent.com/u/52131821?s=460&u=1c87b1763d932fcfc0fa0ce97aad157244a08bd4&v=4"
-              alt="avatar_url"
-            />
+  return (
+    <>
+      <Header>
+        <HeaderContainer>
+          <MainPageButton>
+            <img src={logoImg} alt="logo" />
+          </MainPageButton>
 
-            <div>
-              <strong>
-                Esse é um título de um vídeo, texto aleatórioa para preencher
-                multiplas
-              </strong>
-              <p>Jenkins Dota</p>
-              <p>30 mil vizualizações</p>
-            </div>
-          </VideoInfo>
-        </Video>
+          <SearchBar>
+            <input type="text" placeholder="Buscar por vídeos" />
+            <button type="button">
+              <GoSearch size={24} color="#FFF" />
+            </button>
+          </SearchBar>
 
-        <Video>
-          <img
-            src="https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg"
-            alt="video thumb"
-          />
-          <VideoInfo>
-            <img
-              src="https://avatars0.githubusercontent.com/u/52131821?s=460&u=1c87b1763d932fcfc0fa0ce97aad157244a08bd4&v=4"
-              alt="avatar_url"
-            />
+          <ButtonActionsContainer>
+            <SendVideoButton>
+              <MdVideoCall size={30} />
+            </SendVideoButton>
 
-            <div>
-              <strong>
-                Esse é um título de um vídeo, texto aleatórioa para preencher
-                multiplas
-              </strong>
-              <p>Jenkins Dota</p>
-              <p>30 mil vizualizações</p>
-            </div>
-          </VideoInfo>
-        </Video>
+            <Link to="/signin">
+              <LoginButton>
+                <FiLogIn size={24} />
+                Fazer Login
+              </LoginButton>
+            </Link>
+          </ButtonActionsContainer>
+        </HeaderContainer>
+      </Header>
 
-        <Video>
-          <img
-            src="https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg"
-            alt="video thumb"
-          />
-          <VideoInfo>
-            <img
-              src="https://avatars0.githubusercontent.com/u/52131821?s=460&u=1c87b1763d932fcfc0fa0ce97aad157244a08bd4&v=4"
-              alt="avatar_url"
-            />
+      <Content>
+        <VideoContainer>
+          {videos.map((video) => (
+            <Link key={video.id} to={`/video/${video.id}`}>
+              <Video>
+                <img src={video.video_thumbnail} alt={video.title} />
+                <VideoInfo>
+                  <img src={video.user.avatar_url} alt={video.user.name} />
 
-            <div>
-              <strong>
-                Esse é um título de um vídeo, texto aleatórioa para preencher
-                multiplas
-              </strong>
-              <p>Jenkins Dota</p>
-              <p>30 mil vizualizações</p>
-            </div>
-          </VideoInfo>
-        </Video>
-
-        <Video>
-          <img
-            src="https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg"
-            alt="video thumb"
-          />
-          <VideoInfo>
-            <img
-              src="https://avatars0.githubusercontent.com/u/52131821?s=460&u=1c87b1763d932fcfc0fa0ce97aad157244a08bd4&v=4"
-              alt="avatar_url"
-            />
-
-            <div>
-              <strong>
-                Esse é um título de um vídeo, texto aleatórioa para preencher
-                multiplas
-              </strong>
-              <p>Jenkins Dota</p>
-              <p>30 mil vizualizações</p>
-            </div>
-          </VideoInfo>
-        </Video>
-
-        <Video>
-          <img
-            src="https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg"
-            alt="video thumb"
-          />
-          <VideoInfo>
-            <img
-              src="https://avatars0.githubusercontent.com/u/52131821?s=460&u=1c87b1763d932fcfc0fa0ce97aad157244a08bd4&v=4"
-              alt="avatar_url"
-            />
-
-            <div>
-              <strong>
-                Esse é um título de um vídeo, texto aleatórioa para preencher
-                multiplas
-              </strong>
-              <p>Jenkins Dota</p>
-              <p>30 mil vizualizações</p>
-            </div>
-          </VideoInfo>
-        </Video>
-      </VideoContainer>
-    </Content>
-  </>
-);
+                  <div>
+                    <strong>{video.title}</strong>
+                    <p>{video.user.name}</p>
+                    <p>{video.views} vizualizações</p>
+                  </div>
+                </VideoInfo>
+              </Video>
+            </Link>
+          ))}
+        </VideoContainer>
+      </Content>
+    </>
+  );
+};
 export default Dashboard;
