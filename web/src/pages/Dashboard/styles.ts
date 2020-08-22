@@ -112,6 +112,15 @@ export const Content = styled.div`
 export const VideoContainer = styled.div`
   margin: 3rem auto;
 
+  a {
+    text-decoration: none;
+    color: #333;
+
+    & + a {
+      margin-top: 2rem;
+    }
+  }
+
   display: grid;
 
   grid-template-columns: 42rem;
@@ -119,6 +128,9 @@ export const VideoContainer = styled.div`
   @media (min-width: 850px) {
     grid-template-columns: repeat(2, 42rem);
     gap: 2rem;
+    a + a {
+      margin-top: 0;
+    }
   }
 
   @media (min-width: 1280px) {
@@ -127,26 +139,23 @@ export const VideoContainer = styled.div`
   }
 `;
 
-export const Video = styled.button`
+export const Video = styled.div`
   border-style: none;
   background: #fff;
   border-radius: 0 0 1rem 1rem;
+  transition: transform 0.2s linear;
 
-  > img {
-    width: 42rem;
+  &:hover {
+    transform: translateY(-1rem);
   }
-
-  & + button {
-    margin-top: 2rem;
+  > img {
+    height: 42rem;
+    width: 42rem;
   }
 
   @media (min-width: 700px) {
     > img {
       width: 42rem;
-    }
-
-    & + button {
-      margin-top: 0;
     }
   }
 `;
