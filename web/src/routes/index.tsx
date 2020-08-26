@@ -10,6 +10,7 @@ import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
 import Profile from '../pages/Profile';
 import ShowVideo from '../pages/ShowVideo';
+import Results from '../pages/Results';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -17,6 +18,8 @@ const Routes: React.FC = () => (
     <Route path="/signin" component={SignIn} />
     <Route path="/signup" component={SignUp} />
     <Route path="/forgot" component={ForgotPassword} />
+    <Route path="/results" component={Results} />
+
     <Route path="/reset-password" component={ResetPassword} />
     <Route path="/video/:video_id" component={ShowVideo} />
 
