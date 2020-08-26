@@ -1,29 +1,11 @@
 import React, { useState, useEffect } from 'react';
-
 import ReactPlayer from 'react-player';
+import { useRouteMatch } from 'react-router-dom';
 
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Content, VideoInfo, Title, UserInfo, Description } from './styles';
 
-import { GoSearch } from 'react-icons/go';
-import { FiLogIn } from 'react-icons/fi';
-import { MdVideoCall } from 'react-icons/md';
+import Header from '../../components/Header';
 
-import {
-  Header,
-  HeaderContainer,
-  MainPageButton,
-  SearchBar,
-  ButtonActionsContainer,
-  SendVideoButton,
-  LoginButton,
-  Content,
-  VideoInfo,
-  Title,
-  UserInfo,
-  Description,
-} from './styles';
-
-import logoImg from '../../assets/logo.svg';
 import api from '../../services/api';
 
 interface VideoParams {
@@ -62,33 +44,7 @@ const ShowVideo: React.FC = () => {
 
   return (
     <>
-      <Header>
-        <HeaderContainer>
-          <MainPageButton>
-            <img src={logoImg} alt="logo" />
-          </MainPageButton>
-
-          <SearchBar>
-            <input type="text" placeholder="Buscar por vídeos" />
-            <button type="button">
-              <GoSearch size={24} color="#FFF" />
-            </button>
-          </SearchBar>
-
-          <ButtonActionsContainer>
-            <SendVideoButton>
-              <MdVideoCall size={30} />
-            </SendVideoButton>
-
-            <Link to="/signin">
-              <LoginButton>
-                <FiLogIn size={24} />
-                Fazer Login
-              </LoginButton>
-            </Link>
-          </ButtonActionsContainer>
-        </HeaderContainer>
-      </Header>
+      <Header />
 
       <Content>
         <div>

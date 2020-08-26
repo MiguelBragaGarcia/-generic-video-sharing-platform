@@ -1,27 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { GoSearch } from 'react-icons/go';
-import { FiLogIn } from 'react-icons/fi';
-import { MdVideoCall } from 'react-icons/md';
-
+import Header from '../../components/Header';
 import api from '../../services/api';
-
-import logoImg from '../../assets/logo.svg';
-
-import {
-  Header,
-  HeaderContainer,
-  MainPageButton,
-  ButtonActionsContainer,
-  SearchBar,
-  LoginButton,
-  SendVideoButton,
-  Content,
-  VideoContainer,
-  Video,
-  VideoInfo,
-} from './styles';
+import { Content, VideoContainer, Video, VideoInfo } from './styles';
 
 interface User {
   id: string;
@@ -58,34 +40,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      <Header>
-        <HeaderContainer>
-          <MainPageButton>
-            <img src={logoImg} alt="logo" />
-          </MainPageButton>
-
-          <SearchBar>
-            <input type="text" placeholder="Buscar por vídeos" />
-            <button type="button">
-              <GoSearch size={24} color="#FFF" />
-            </button>
-          </SearchBar>
-
-          <ButtonActionsContainer>
-            <SendVideoButton>
-              <MdVideoCall size={30} />
-            </SendVideoButton>
-
-            <Link to="/signin">
-              <LoginButton>
-                <FiLogIn size={24} />
-                Fazer Login
-              </LoginButton>
-            </Link>
-          </ButtonActionsContainer>
-        </HeaderContainer>
-      </Header>
-
+      <Header />
       <Content>
         <VideoContainer>
           {videos.map((video) => (
