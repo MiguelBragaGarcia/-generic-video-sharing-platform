@@ -26,7 +26,7 @@ const Header: React.FC = () => {
   const { user } = useAuth();
 
   const handleSearch = useCallback(() => {
-    const parsedString = searchInput.replace(' ', '%');
+    const parsedString = searchInput.replace(/[( )]/g, '%');
 
     history.push({
       pathname: '/results',
