@@ -74,6 +74,12 @@ class FakeVideosRepository implements IVideosRepository {
 
     return video;
   }
+
+  public async findAllByUser(user_id:string):Promise<Video[] | undefined> {
+    const video= this.videos.filter(video => (video.user.id === user_id));
+
+    return video;
+  }
 }
 
 export default FakeVideosRepository;

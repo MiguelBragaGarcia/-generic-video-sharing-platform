@@ -5,10 +5,11 @@ import { celebrate, Segments, Joi } from 'celebrate';
 import uploadConfig from '@config/upload';
 
 import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenticated';
+
 import UploadVideoController from '../controllers/UploadVideoController';
 import VideosController from '../controllers/VideosController';
-
 import UploadThumbnailController from '../controllers/UploadThumbnailController';
+import ListUserVideosController from '../controllers/ListUserVideosController';
 
 const videoRouter = Router();
 const upload = multer(uploadConfig.multer);
@@ -16,6 +17,7 @@ const upload = multer(uploadConfig.multer);
 const uploadThumbnailController = new UploadThumbnailController();
 const uploadVideoController = new UploadVideoController();
 const videosController = new VideosController();
+const listUserVideosController = new ListUserVideosController();
 
 videoRouter.get(
   '/',
@@ -26,6 +28,14 @@ videoRouter.get(
   }),
   videosController.index
 );
+
+videoRouter.get ('/channel/:user_id', celebrate({
+  [Segments.PARAMS]: {
+    user_id:Joi.string().uuid().required(),
+  }
+}), 
+listUserVideosController.show
+)
 
 videoRouter.get(
   '/:video_id',

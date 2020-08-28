@@ -9,4 +9,5 @@ export default interface IVideosRepository {
   save(video: Video): Promise<Video>;
   delete(video_id: string): Promise<void>;
   find(data: IPaginateOptionsDTO): Promise<Video[] | undefined>;
+  findAllByUser(user_id:string):Promise<Video[] | undefined>;
 }
