@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { FaUserCircle } from 'react-icons/fa';
 import Header from '../../components/Header';
 import api from '../../services/api';
-import { Content, VideoContainer, Video, VideoInfo } from './styles';
+import {
+  Content, VideoContainer, Video, VideoInfo,
+} from './styles';
 
 interface User {
   id: string;
@@ -11,7 +14,7 @@ interface User {
   avatar_url: string;
 }
 
-interface VideoInfo {
+export interface VideoInfo {
   id: string;
   title: string;
   description: string;
@@ -48,8 +51,8 @@ const Dashboard: React.FC = () => {
               <Video>
                 <img src={video.video_thumbnail} alt={video.title} />
                 <VideoInfo>
-                  <img src={video.user.avatar_url} alt={video.user.name} />
-
+                  {video.user.avatar_url ? <img src={video.user.avatar_url} alt={video.user.name} />
+                    : <FaUserCircle />}
                   <div>
                     <strong>{video.title}</strong>
                     <p>{video.user.name}</p>

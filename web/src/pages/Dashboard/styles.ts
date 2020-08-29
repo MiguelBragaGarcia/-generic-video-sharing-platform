@@ -67,6 +67,13 @@ export const VideoInfo = styled.div`
     border-radius: 50%;
   }
 
+  svg {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    color: #eee;
+  }
+
   div {
     flex: 1;
     margin-left: 2rem;
