@@ -56,9 +56,11 @@ const Header: React.FC = () => {
         </SearchBar>
 
         <ButtonActionsContainer>
-          <SendVideoButton>
-            <MdVideoCall size={30} />
-          </SendVideoButton>
+          <Link to="/studio">
+            <SendVideoButton>
+              <MdVideoCall size={30} />
+            </SendVideoButton>
+          </Link>
 
           {user ? (
             <Link to="/profile">
