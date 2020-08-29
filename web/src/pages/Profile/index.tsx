@@ -20,7 +20,9 @@ import Input from '../../components/Input';
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
 
-import { Container, Header, Content, AvatarInput } from './styles';
+import {
+  Container, Header, Content, AvatarInput,
+} from './styles';
 
 interface ProfileFormData {
   name: string;

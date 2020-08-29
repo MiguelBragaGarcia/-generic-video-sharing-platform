@@ -23,7 +23,7 @@ export const Header = styled.div`
     border-style: none;
     background: transparent;
 
-    svg {
+    > svg {
       color: red;
     }
   }
