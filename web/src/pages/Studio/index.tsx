@@ -1,27 +1,56 @@
-import React, { useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { FaUserCircle, FaEdit, FaTrashAlt } from 'react-icons/fa';
 import { FiChevronLeft, FiPlus } from 'react-icons/fi';
 
 import { useAuth } from '../../hooks/Auth';
+import api from '../../services/api';
+
+import { VideoInfo } from '../Dashboard/index';
 
 import {
   Container, Header, Content, ButtonContainer, Video,
 } from './styles';
 
+interface DeleteVideo {
+  video_id: string;
+}
+
 const Studio :React.FC = () => {
   const { user } = useAuth();
+  const history = useHistory();
 
-  const handleDeleteVideo = useCallback(() => {
+  const [userVideos, setUserVideos] = useState<VideoInfo[]>([]);
 
-  }, []);
+  useEffect(() => {
+    async function loadUserVideoData() {
+      const response = await api.get<VideoInfo[]>(`videos/channel/${user.id}`);
 
-  const handleEditVideo = useCallback(() => {
+      setUserVideos(response.data);
+    }
 
-  }, []);
+    loadUserVideoData();
+  }, [user.id]);
 
-  const handleAddVideo = useCallback(() => {
+  const handleCreateVideo = useCallback(async () => {
+    const response = await api.post('videos');
+    const video = response.data;
 
+    history.push(`/studio/create/${video.id}`);
+  }, [history]);
+
+  const handleEditVideo = useCallback(async (video_id:string) => {
+    history.push(`/studio/edit/${video_id}`);
+  }, [history]);
+
+  const handleDeleteVideo = useCallback(async (video_id:string) => {
+    await api.delete('videos', {
+      data: {
+        video_id,
+      },
+    });
+
+    setUserVideos((state) => (state.filter((video) => video.id !== video_id)));
   }, []);
 
   return (
@@ -40,75 +69,32 @@ const Studio :React.FC = () => {
       <Content>
         <div>
           <h1>Meus vídeos</h1>
-          <button type="button" onClick={handleAddVideo}>
+          <button type="button" onClick={handleCreateVideo}>
 
             <FiPlus />
             <strong>Criar vídeo</strong>
           </button>
         </div>
-        <Video>
-          <img src="https://thumbs.dreamstime.com/b/imagem-de-fundo-bonita-do-c%C3%A9u-da-natureza-64743176.jpg" alt="video_thumb" />
-          <div>
-            <strong>Titulo do video muito massa que contém mais de 1 linha</strong>
-            <ButtonContainer>
-              <button type="button" onClick={handleDeleteVideo}>
-                <FaTrashAlt />
-              </button>
 
-              <button type="button" onClick={handleEditVideo}>
-                <FaEdit />
-              </button>
-            </ButtonContainer>
-          </div>
-        </Video>
+        {userVideos.map((video) => (
+          <Video key={video.id}>
+            <img src={video.video_thumbnail} alt={video.title} />
+            <div>
+              <strong>{video.title}</strong>
+              <ButtonContainer>
 
-        <Video>
-          <img src="https://thumbs.dreamstime.com/b/imagem-de-fundo-bonita-do-c%C3%A9u-da-natureza-64743176.jpg" alt="video_thumb" />
-          <div>
-            <strong>Titulo do video muito massa que contém mais de 1 linha</strong>
-            <ButtonContainer>
-              <button type="button" onClick={handleDeleteVideo}>
-                <FaTrashAlt />
-              </button>
+                <button type="button" onClick={() => handleEditVideo(video.id)}>
+                  <FaEdit color="#3052d9" />
+                </button>
 
-              <button type="button" onClick={handleEditVideo}>
-                <FaEdit />
-              </button>
-            </ButtonContainer>
-          </div>
-        </Video>
+                <button type="button" onClick={() => handleDeleteVideo(video.id)}>
+                  <FaTrashAlt color="red" />
+                </button>
+              </ButtonContainer>
+            </div>
+          </Video>
 
-        <Video>
-          <img src="https://thumbs.dreamstime.com/b/imagem-de-fundo-bonita-do-c%C3%A9u-da-natureza-64743176.jpg" alt="video_thumb" />
-          <div>
-            <strong>Titulo do video muito massa que contém mais de 1 linha</strong>
-            <ButtonContainer>
-              <button type="button" onClick={handleDeleteVideo}>
-                <FaTrashAlt />
-              </button>
-
-              <button type="button" onClick={handleEditVideo}>
-                <FaEdit />
-              </button>
-            </ButtonContainer>
-          </div>
-        </Video>
-
-        <Video>
-          <img src="https://thumbs.dreamstime.com/b/imagem-de-fundo-bonita-do-c%C3%A9u-da-natureza-64743176.jpg" alt="video_thumb" />
-          <div>
-            <strong>Titulo do video muito massa que contém mais de 1 linha</strong>
-            <ButtonContainer>
-              <button type="button" onClick={handleDeleteVideo}>
-                <FaTrashAlt />
-              </button>
-
-              <button type="button" onClick={handleEditVideo}>
-                <FaEdit />
-              </button>
-            </ButtonContainer>
-          </div>
-        </Video>
+        ))}
       </Content>
     </Container>
   );
