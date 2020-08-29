@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import { Link } from 'react-router-dom';
-import { Container, VideoResult, Info, Description } from './styles';
+import {
+  Container, VideoResult, Info, Description,
+} from './styles';
 import Header from '../../components/Header';
 import api from '../../services/api';
 
@@ -31,7 +33,10 @@ const Results: React.FC = () => {
   const [results, setResults] = useState<VideoResults[]>();
 
   const formattedString = useCallback(
-    (data: string) => data.replace(/\?search=|%/g, ' '),
+    (data: string) => {
+      const urlParams = decodeURI(data);
+      return urlParams.replace(/\?search=|%/g, ' ');
+    },
     [],
   );
 
