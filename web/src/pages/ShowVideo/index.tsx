@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { useRouteMatch } from 'react-router-dom';
 
-import { Content, VideoInfo, Title, UserInfo, Description } from './styles';
+import { FaUserCircle } from 'react-icons/fa';
+import {
+  Content, VideoInfo, Title, UserInfo, Description,
+} from './styles';
 
 import Header from '../../components/Header';
 
@@ -61,10 +64,12 @@ const ShowVideo: React.FC = () => {
             </Title>
 
             <UserInfo>
-              <img
-                src={videoFromApi.user?.avatar_url}
-                alt={videoFromApi.user?.name}
-              />
+              {videoFromApi.user?.avatar_url ? (
+                <img
+                  src={videoFromApi.user.avatar_url}
+                  alt={videoFromApi.user.name}
+                />
+              ) : <FaUserCircle />}
               <strong>{videoFromApi.user?.name}</strong>
             </UserInfo>
 

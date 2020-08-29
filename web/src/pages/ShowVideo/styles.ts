@@ -56,6 +56,13 @@ export const UserInfo = styled.div`
     border-radius: 50%;
   }
 
+  svg {
+    height: 6rem;
+    width: 6rem;
+    border-radius: 50%;
+    color: #eee;
+  }
+
   strong {
     margin-left: 2rem;
   }
