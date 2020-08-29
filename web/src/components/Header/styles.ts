@@ -15,6 +15,11 @@ export const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  svg {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
   a {
     text-decoration: none;
   }
@@ -77,11 +82,10 @@ export const ButtonActionsContainer = styled.div`
       width: 3.5rem;
       height: 3.5rem;
       border-radius: 50%;
+    }
 
-      svg {
-        width: 3.5rem;
-        height: 3.5rem;
-      }
+    >svg {
+      color: #eee;
     }
   }
 `;

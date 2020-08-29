@@ -26,8 +26,7 @@ const Header: React.FC = () => {
   const { user } = useAuth();
 
   const handleSearch = useCallback(() => {
-    const parsedString = searchInput.replace(/[( )]/g, '%');
-
+    const parsedString = encodeURI(searchInput);
     history.push({
       pathname: '/results',
       search: `?search=${parsedString}`,
