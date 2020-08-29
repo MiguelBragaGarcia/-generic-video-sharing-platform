@@ -12,6 +12,8 @@ import Profile from '../pages/Profile';
 import ShowVideo from '../pages/ShowVideo';
 import Results from '../pages/Results';
 import Studio from '../pages/Studio';
+import Editing from '../pages/Editing';
+import Create from '../pages/Create';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -21,11 +23,15 @@ const Routes: React.FC = () => (
     <Route path="/forgot" component={ForgotPassword} />
     <Route path="/results" component={Results} />
 
-    <Route path="/studio" component={Studio} />
     <Route path="/reset-password" component={ResetPassword} />
     <Route path="/video/:video_id" component={ShowVideo} />
 
+    <PrivateRoute path="/studio" exact component={Studio} />
+    <PrivateRoute path="/studio/edit/:video_id" component={Editing} />
+    <PrivateRoute path="/studio/create/:video_id" component={Create} />
+
     <PrivateRoute path="/profile" component={Profile} />
+
   </Switch>
 );
 
