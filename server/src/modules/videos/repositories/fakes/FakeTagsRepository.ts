@@ -47,6 +47,12 @@ class FakeTagsRepository implements ITagsRepository {
   public async findByVideoId(video_id: string): Promise<Tag | undefined> {
     return this.tagsRepository.find((tag) => tag.video_id === video_id);
   }
+
+  public async delete(video_id:string): Promise<void> {
+    const findIndex = this.tagsRepository.filter(tag => tag.video_id !== video_id);
+
+    this.tagsRepository= findIndex;
+  }
 }
 
 export default FakeTagsRepository;

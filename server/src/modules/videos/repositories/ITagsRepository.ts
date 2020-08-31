@@ -6,4 +6,5 @@ export default interface ITagsRepository {
   findByTags(tags: string[]): Promise<Tag[] | undefined>;
   save(data: Tag): Promise<void>;
   findByVideoId(video_id: string): Promise<Tag | undefined>;
+  delete(video_id: string): Promise<void>;
 }

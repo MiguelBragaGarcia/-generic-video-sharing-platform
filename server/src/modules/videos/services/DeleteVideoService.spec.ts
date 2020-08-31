@@ -3,26 +3,36 @@ import FakeDiskStorageProvider from '@shared/container/providers/StorageProvider
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
 import FakeVideosRepository from '../repositories/fakes/FakeVideosRepository';
 import DeleteVideoService from './DeleteVideoService';
+import FakeTagsRepository from '../repositories/fakes/FakeTagsRepository';
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeVideosRepository: FakeVideosRepository;
-let fakeDiskStorageProvider: FakeDiskStorageProvider;
+let fakeTagsReposiory: FakeTagsRepository;
+
+let fakeVideoStorageProvider: FakeDiskStorageProvider;
+let fakeThumbnailStorageProvider: FakeDiskStorageProvider;
 let deleteVideoService: DeleteVideoService;
 
 describe('DeleteVideo', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
     fakeVideosRepository = new FakeVideosRepository();
-    fakeDiskStorageProvider = new FakeDiskStorageProvider();
+    fakeTagsReposiory= new FakeTagsRepository();
+    fakeVideoStorageProvider = new FakeDiskStorageProvider();
+    fakeThumbnailStorageProvider = new FakeDiskStorageProvider();
     deleteVideoService = new DeleteVideoService(
-      fakeDiskStorageProvider,
+      fakeVideoStorageProvider,
+      fakeThumbnailStorageProvider,
+      fakeTagsReposiory,
       fakeVideosRepository
     );
   });
 
   it('Should be able delete a video', async () => {
-    const deleteInDatabase = jest.spyOn(fakeVideosRepository, 'delete');
-    const deleteFile = jest.spyOn(fakeDiskStorageProvider, 'deleteFile');
+    const deleteVideoInDatabase = jest.spyOn(fakeVideosRepository, 'delete');
+    const deleteVideo = jest.spyOn(fakeVideoStorageProvider, 'deleteFile');
+    const deleteThumbnail = jest.spyOn(fakeThumbnailStorageProvider, 'deleteFile');
+    const deleteTagInDatabase = jest.spyOn(fakeTagsReposiory,'delete')
 
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
@@ -33,6 +43,7 @@ describe('DeleteVideo', () => {
     const video = await fakeVideosRepository.create(user);
 
     video.video = 'video.mp4';
+    video.thumbnail="thumbnail.jpg"
 
     const updatedVideo = await fakeVideosRepository.save(video);
 
@@ -41,13 +52,18 @@ describe('DeleteVideo', () => {
       video_id: video.id,
     });
 
-    expect(deleteInDatabase).toBeCalledWith(video.id);
-    expect(deleteFile).toBeCalledWith('video.mp4');
+    expect(deleteVideoInDatabase).toBeCalledWith(video.id);
+    expect(deleteTagInDatabase).toBeCalledWith(video.id);
+
+    expect(deleteVideo).toBeCalledWith('video.mp4');
+    expect(deleteThumbnail).toBeCalledWith('thumbnail.jpg');
+
+  
   });
 
   it('Should be able delete a raw video instance', async () => {
     const deleteInDatabase = jest.spyOn(fakeVideosRepository, 'delete');
-    const deleteFile = jest.spyOn(fakeDiskStorageProvider, 'deleteFile');
+    const deleteFile = jest.spyOn(fakeVideoStorageProvider, 'deleteFile');
 
     const user = await fakeUsersRepository.create({
       name: 'John Doe',

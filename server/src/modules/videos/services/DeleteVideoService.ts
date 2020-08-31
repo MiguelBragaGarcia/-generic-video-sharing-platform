@@ -4,6 +4,7 @@ import AppError from '@shared/errors/AppError';
 
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import IVideosRepository from '../repositories/IVideosRepository';
+import ITagsRepository from '../repositories/ITagsRepository';
 
 interface IRequest {
   video_id: string;
@@ -13,7 +14,12 @@ interface IRequest {
 class DeleteVideoService {
   constructor(
     @inject('VideoStorageProvider')
-    private storageProvider: IStorageProvider,
+    private videoStorageProvider: IStorageProvider,
+    @inject('ThumbnailStorageProvider')
+    private thumbnailStorageProvider: IStorageProvider, 
+
+    @inject('TagsRepository')
+    private tagsRepository: ITagsRepository,
     @inject('VideosRepository')
     private videosRepository: IVideosRepository
   ) {}
@@ -30,8 +36,14 @@ class DeleteVideoService {
     }
 
     if (video.video) {
-      await this.storageProvider.deleteFile(video.video);
+      await this.videoStorageProvider.deleteFile(video.video);
     }
+
+    if (video.thumbnail){
+      await this.thumbnailStorageProvider.deleteFile(video.thumbnail);
+    }
+
+    await this.tagsRepository.delete(video.id);
 
     await this.videosRepository.delete(video.id);
   }

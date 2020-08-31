@@ -40,6 +40,13 @@ class TagsRepository implements ITagsRepository {
 
     return tag;
   }
+
+  public async delete(video_id: string): Promise<void>{
+    await this.ormRepository.delete({
+      video_id,
+    })
+
+  }
 }
 
 export default TagsRepository;
