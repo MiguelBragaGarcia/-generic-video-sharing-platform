@@ -186,6 +186,7 @@ margin: 1rem 0;
   }
 
   svg {
+    border-radius: 1rem;
     border: 1px solid #333;
     padding: 3rem;
     color: #333;

@@ -101,7 +101,7 @@ const Create:React.FC = () => {
 
         <form onSubmit={handleSubmit}>
           <div>
-            <p>Edite seu vídeo</p>
+            <p>Crie seu vídeo</p>
           </div>
 
           <Video>
