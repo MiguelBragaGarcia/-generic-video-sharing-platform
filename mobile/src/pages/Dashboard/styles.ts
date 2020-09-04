@@ -1,13 +1,12 @@
 import styled from 'styled-components/native';
 import { darken } from 'polished';
 
-import { TextInput } from 'react-native';
-
 export const Header = styled.View`
   height: 60px;
+  background: #fff;
   justify-content: center;
   border-bottom-width: 1px;
-  border-bottom-color: #c5c5c5;
+  border-bottom-color: #eee;
   padding: 0 10px;
 `;
 
@@ -16,27 +15,15 @@ export const NormalHeader = styled.View`
   align-items: center;
   justify-content: space-between;
 `;
-export const SearchHeader = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
 
 export const LogoImage = styled.Image`
   width: 35px;
   height: 35px;
 `;
 
-export const SearchInput = styled(TextInput)`
-  padding: 5px 16px;
-  font-size: 16px;
-  color: #000;
-  width: 90%;
-  background: #eee;
-  border-radius: 20px;
+export const VideosList = styled.ScrollView`
+  background: #fff;
 `;
-
-export const VideosList = styled.ScrollView``;
 
 export const Video = styled.View`
   border-bottom-width: 1px;
