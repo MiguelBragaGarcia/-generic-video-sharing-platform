@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Dashboard from '../pages/Dashboard';
 import Search from '../pages/Search';
+import ShowVideo from '../pages/ShowVideo';
 
 const App = createStackNavigator();
 
@@ -13,6 +14,7 @@ function AppStack() {
       <App.Navigator screenOptions={{ headerShown: false }}>
         <App.Screen name="Dashboard" component={Dashboard} />
         <App.Screen name="Search" component={Search} />
+        <App.Screen name="Video" component={ShowVideo} />
       </App.Navigator>
     </>
   );
