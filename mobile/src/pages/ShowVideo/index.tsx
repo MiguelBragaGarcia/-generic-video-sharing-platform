@@ -1,8 +1,8 @@
-import React from 'react';
-import { Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react';
 
 import Video from 'react-native-video';
 
+import { useRoute } from '@react-navigation/native';
 import {
   Container,
   VideoContainer,
@@ -11,39 +11,51 @@ import {
   Views,
   Description,
 } from './styles';
+import { VideoInfo } from '../Dashboard';
+import api from '../../services/api';
 
-import videoFile from '../../assets/Musica-de-teste.mp4';
+interface RouteParams {
+  video_id: string;
+}
 
 const ShowVideo: React.FC = () => {
-  const windowWidth = Dimensions.get('window').width;
+  const [video, setVideo] = useState<VideoInfo>();
+
+  const route = useRoute();
+
+  const routeParams = route.params as RouteParams;
+  useEffect(() => {
+    async function loadVideo() {
+      const response = await api.get<VideoInfo>(
+        `videos/${routeParams.video_id}`,
+      );
+
+      setVideo(response.data);
+    }
+
+    loadVideo();
+  }, [routeParams.video_id]);
 
   return (
     <Container>
       <VideoContainer>
         <Video
-          source={videoFile}
-          style={{ width: windowWidth, height: 300 }}
+          source={{
+            uri: video?.video_url,
+          }}
+          style={{ flex: 1 }}
+          resizeMode="cover"
           controls
         />
       </VideoContainer>
 
       <Info>
-        <Title>Um titulo muito longo para bugar as linhas</Title>
+        <Title>{video?.title}</Title>
 
-        <Views>1000000 Vizualizações</Views>
+        <Views>{video?.views} Vizualizações</Views>
       </Info>
 
-      <Description>
-        It is a long established fact that a reader will be distracted by the
-        readable content of a page when looking at its layout. The point of
-        using Lorem Ipsum is that it has a more-or-less normal distribution of
-        letters, as opposed to using 'Content here, content here', making it
-        look like readable English. Many desktop publishing packages and web
-        page editors now use Lorem Ipsum as their default model text, and a
-        search for 'lorem ipsum' will uncover many web sites still in their
-        infancy. Various versions have evolved over the years, sometimes by
-        accident, sometimes on purpose (injected humour and the like).
-      </Description>
+      <Description>{video?.description}</Description>
     </Container>
   );
 };

@@ -1,6 +1,8 @@
 import styled from 'styled-components/native';
 import { darken } from 'polished';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 export const Header = styled.View`
   height: 60px;
   background: #fff;
@@ -47,6 +49,12 @@ export const AvatarImage = styled.Image`
   height: 40px;
   border-radius: 20px;
 `;
+
+export const AvatarSVG = styled(Icon)`
+  border-radius: 20px;
+  color: #eee;
+`;
+
 export const Title = styled.Text`
   color: #333;
   font-weight: bold;
