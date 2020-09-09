@@ -1,10 +1,8 @@
-# Plataforma genérica de vídeos
+# Plataforma genérica de compartilhamento de vídeos
+A sua plataforma de compartilhamento de vídeos, assista onde e como quiser.
 
-Esse projeto é uma plataforma de compartilhamento de vídeos, semelhante ao youtube, vimeo e outras.
-
-## Objetivo do projeto
-
-O projeto foi desenvolvido para matar uma curiosidade que tinha sobre plataformas de envio de videos e também melhorar minhas habilidades como programador
+## Plataforma de vídeos backend
+Esse repositório abrange o back-end da aplicação.
 
 ## Como executar esse projeto em sua máquina
 
