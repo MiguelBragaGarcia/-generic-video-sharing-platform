@@ -6,9 +6,6 @@ Esse repositório abrange o front-end da aplicação.
 
 ## Como executar o projeto
 
-- Clone esse repositório
-<pre>git clone https://github.com/MiguelBragaGarcia/-generic-video-sharing-platform.git</pre>
-
 - Instale todas as dependências do projeto
 <pre>yarn install</pre>
 
