@@ -6,8 +6,6 @@ Esse repositório abrange o back-end da aplicação.
 
 ## Como executar esse projeto em sua máquina
 
-- Instale o [Nodejs](https://nodejs.org/en/) na versão LTS
-- Instale o [Docker](https://docs.docker.com/get-docker/)
 - Crie no docker uma instância POSTGRESQL
 
 <pre>docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d postgres</pre>
