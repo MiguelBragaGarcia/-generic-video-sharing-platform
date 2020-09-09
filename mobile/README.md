@@ -1,8 +1,8 @@
 # Plataforma genérica de compartilhamento de vídeos
 A sua plataforma de compartilhamento de vídeos, assista onde e como quiser.
 
-## Plataforma de vídeos Web
-Esse repositório abrange o front-end da aplicação.
+## Plataforma de vídeos Mobile
+Esse repositório abrange o mobile da aplicação.
 
 ## Como executar o projeto
 
@@ -20,9 +20,7 @@ Esse repositório abrange o front-end da aplicação.
 <pre>yarn start</pre>
 
 - Execute o emulador android/ios
-<pre>
-yarn android
+<pre>yarn android </pre>
 ou
-yarn ios
-</pre>
+<pre>yarn ios</pre>
 
