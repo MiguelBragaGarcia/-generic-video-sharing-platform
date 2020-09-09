@@ -16,5 +16,13 @@ Esse repositório abrange o front-end da aplicação.
 <pre>yarn dev:server</pre>
 <pre>yarn dev:queue</pre>
 
-- Execute o servidor front-end
+- Execute o servidor mobile
 <pre>yarn start</pre>
+
+- Execute o emulador android/ios
+<pre>
+yarn android
+ou
+yarn ios
+</pre>
+
